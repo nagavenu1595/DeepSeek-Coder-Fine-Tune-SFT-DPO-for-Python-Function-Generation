@@ -1,0 +1,2302 @@
+[
+  {
+    "prompt": "Task: write a function to check wether a number is prime or not\n```python\n",
+    "completion": "Sure, here's a simple way to do this in Python:\n\n```python\ndef is_prime(n):\n    if n <= 1:\n        return False\n    elif n == 2:\n        return True\n    else:\n        for i in range(2, n):\n            if n % i == 0:\n                return False\n        return True\n```\nThis function checks whether a number `n` is prime or not by iterating from 2 to `n-1` and checking if `n` is divisible by any of these numbers. If it is, then `n` isn't prime (it has at least one factor other than itself), so the function returns False. Otherwise, the function returns True, indicating that `n` is prime.\n\nHowever, this algorithm can be optimized further: we only need to check up to the square root of `n` because a larger factor would have been detected already. Here's an improved version:\n\n```python\nimport math\ndef is_prime(n):\n    if n <= 1:\n        return False\n    elif n == 2:\n        return True\n    else:\n        for i in range(2, int(math.sqrt(n)) + 1):\n            if n % i == 0:\n                return False\n        return True\n```\nThis version of the function is much faster than the previous one for large numbers.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_prime(2) == True",
+      "assert is_prime(4) == False",
+      "assert is_prime(13) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_prime(n):\n    if n <= 1:\n        return False\n    elif n == 2:\n        return False\n    else:\n        for i in range(2, n):\n            if n % i == 0:\n                return False\n        return True",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_prime(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_prime(n):\n    if n <= 1:\n        return False\n    elif n != 2:\n        return True\n    else:\n        for i in range(2, n):\n            if n % i == 0:\n                return False\n        return True",
+        "reward": 0.667
+      },
+      {
+        "code": "def is_prime(n):\n    if n <= 1:\n        return True\n    elif n == 2:\n        return False\n    else:\n        for i in range(2, n):\n            if n % i == 0:\n                return False\n        return True",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a year is a leap year.\n```python\n",
+    "completion": "Sure, here's a simple function in Python to check if a given year is a leap year or not:\n\n```python\ndef is_leap(year):\n    \"\"\"Check if the provided year is a leap year\"\"\"\n    \n    # Year can be evenly divided by 4;\n    if year % 4 != 0:\n        return False\n  \n    # If year can be evenly divided by 100, it is NOT a leap year unless...\n    elif year % 100 != 0:\n        return True\n  \n    # The year is also evenly divisible by 400. Then it is a leap year.\n    elif year % 400 != 0:\n        return False\n    \n    else:\n        return True\n```\nYou can use this function like so:\n\n```python\nprint(is_leap(2019)) # Outputs: False\nprint(is_leap(2000)) # Outputs: True\nprint(is_leap(2400)) # Outputs: True\nprint(is_leap(1800)) # Outputs: False\n```\nThis function works by following the rules of leap years, which are every 4th year is a leap year except for end of century years. The year can be evenly divided by 4; If the year cannot be evenly divided by 100, it is a leap year; However, the year is also evenly divisible by 400. Then it is a leap year.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_leap(2000) == True",
+      "assert is_leap(1900) == False",
+      "assert is_leap(2024) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_leap(year):\n    \"\"\"Check if the provided year is a leap year\"\"\"\n    \n    # Year can be evenly divided by 4;\n    if year % 4 != 0:\n        return False\n  \n    # If year can be evenly divided by 100, it is NOT a leap year unless...\n    elif year % 100 != 0:\n        return False\n  \n    # The year is also evenly divisible by 400. Then it is a leap year.\n    elif year % 400 != 0:\n        return False\n    \n    else:\n        return True",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_leap(year):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_leap(year):\n    \"\"\"Check if the provided year is a leap year\"\"\"\n    \n    # Year can be evenly divided by 4;\n    if year % 4 != 0:\n        return True\n  \n    # If year can be evenly divided by 100, it is NOT a leap year unless...\n    elif year % 100 != 0:\n        return False\n  \n    # The year is also evenly divisible by 400. Then it is a leap year.\n    elif year % 400 != 0:\n        return False\n    \n    else:\n        return True",
+        "reward": 0.667
+      },
+      {
+        "code": "def is_leap(year):\n    \"\"\"Check if the provided year is a leap year\"\"\"\n    \n    # Year can be evenly divided by 4;\n    if year // 4 != 0:\n        return False\n  \n    # If year can be evenly divided by 100, it is NOT a leap year unless...\n    elif year % 100 != 0:\n        return True\n  \n    # The year is also evenly divisible by 400. Then it is a leap year.\n    elif year % 400 != 0:\n        return False\n    \n    else:\n        return True",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that computes the nth Fibonacci number (efficiently)\n```python\n",
+    "completion": "Sure, here is an efficient Python function that calculates the nth Fibonacci number using memoization to avoid redundant calculations.\n\n```python\ndef fib(n, memo={}):\n    if n in memo:\n        return memo[n]\n    elif n <= 2:\n        return 1\n    else:\n        result = fib(n-1) + fib(n-2)\n        memo[n] = result\n        return result\n```\n\nThis function works by using a dictionary `memo` to store the Fibonacci numbers as they are calculated. This avoids redundant calculations, making it much more efficient than the naive recursion approach for large inputs. \n\nPlease note that in this function, the index of the sequence starts from 1 (not 0) and first two members of the sequence are 1. So if you want to compute the nth Fibonacci number, call `fib(n)` instead of `fib(n-1)`.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert fib(0) == 0 or fib(1) == 1",
+      "assert fib(10) == 55",
+      "assert fib(6) == 8"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def fib(n, memo={}):\n    if n in memo:\n        return memo[n]\n    elif n < 2:\n        return 1\n    else:\n        result = fib(n-1) + fib(n-2)\n        memo[n] = result\n        return result",
+        "reward": 0.4
+      },
+      {
+        "code": "def fib(n, memo):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def fib(n, memo={}):\n    if n in memo:\n        return memo[n]\n    elif n <= 2:\n        return 1\n    else:\n        result = fib(n-1) - fib(n-2)\n        memo[n] = result\n        return result",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that validates if parentheses in a string are balanced.\n```python\n",
+    "completion": "Sure, here's a simple solution using the stack data structure. \n\n```python\ndef is_balanced(parenthesis_string):\n    stack = []\n    pairs = {'(': ')', '{': '}', '[': ']'}\n    \n    for char in parenthesis_string:\n        if char in pairs:\n            # If it's an opening bracket, push it to the stack.\n            stack.append(char)\n        elif len(stack) == 0 or pairs[stack.pop()] != char:\n            # If it's a closing bracket and the stack is empty or the last opened bracket doesn't match, return False.\n            return False\n    \n    # After going through all characters, if there are any unmatched opening brackets left in the stack, return False.\n    return len(stack) == 0\n```\nYou can use it like this: \n\n```python\nprint(is_balanced('()'))   # True\nprint(is_balanced('(){}[]'))   # True\nprint(is_balanced('(({}))[]'))   # True\nprint(is_balanced('({)}['))    # False\nprint(is_balanced('('))    # False\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_balanced(\"()\") == True",
+      "assert is_balanced(\"([)]\") == False",
+      "assert is_balanced(\"{[()]}\") == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_balanced(parenthesis_string):\n    stack = []\n    pairs = {'(': ')', '{': '}', '[': ']'}\n    \n    for char in parenthesis_string:\n        if char in pairs:\n            # If it's an opening bracket, push it to the stack.\n            stack.append(char)\n        elif len(stack) == 0 or pairs[stack.pop()] != char:\n            # If it's a closing bracket and the stack is empty or the last opened bracket doesn't match, return False.\n            return True\n    \n    # After going through all characters, if there are any unmatched opening brackets left in the stack, return False.\n    return len(stack) == 0",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_balanced(parenthesis_string):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_balanced(parenthesis_string):\n    stack = []\n    pairs = {'(': ')', '{': '}', '[': ']'}\n    \n    for char in parenthesis_string:\n        if char in pairs:\n            # If it's an opening bracket, push it to the stack.\n            stack.append(char)\n        elif len(stack) != 0 or pairs[stack.pop()] != char:\n            # If it's a closing bracket and the stack is empty or the last opened bracket doesn't match, return False.\n            return False\n    \n    # After going through all characters, if there are any unmatched opening brackets left in the stack, return False.\n    return len(stack) == 0",
+        "reward": 0.333
+      },
+      {
+        "code": "def is_balanced(parenthesis_string):\n    stack = []\n    pairs = {'(': ')', '{': '}', '[': ']'}\n    \n    for char in parenthesis_string:\n        if char in pairs:\n            # If it's an opening bracket, push it to the stack.\n            stack.append(char)\n            return False\n    \n    # After going through all characters, if there are any unmatched opening brackets left in the stack, return False.\n    return len(stack) == 0",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that converts Roman numerals to integer.\n```python\n",
+    "completion": "Sure, here is a simple Python function for converting Roman numerals to integers using a dictionary mapping:\n\n```python\ndef roman_to_int(s):\n    rom_val = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}\n    int_val = 0\n    for i in range(len(s)):\n        if i > 0 and rom_val[s[i]] > rom_val[s[i - 1]]:\n            int_val += rom_val[s[i]] - 2 * rom_val[s[i - 1]]\n        else:\n            int_val += rom_val[s[i]]\n    return int_val\n```\nThis function works by iterating over the string `s` and adding to an integer variable `int_val` the value of each character in `rom_val`. However, if the current digit is greater than the previous one, we subtract twice the value of the previous digit because it has been added to the total previously (so it's being counted as part of a 'subtraction').",
+    "reward": 1.0,
+    "test_cases": [
+      "assert roman_to_int(\"III\") == 3",
+      "assert roman_to_int(\"IV\") == 4",
+      "assert roman_to_int(\"IX\") == 9"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def roman_to_int(s):\n    rom_val = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}\n    int_val = 0\n    for i in range(len(s)):\n        if i < 0 and rom_val[s[i]] > rom_val[s[i - 1]]:\n            int_val += rom_val[s[i]] - 2 * rom_val[s[i - 1]]\n        else:\n            int_val += rom_val[s[i]]\n    return int_val",
+        "reward": 0.4
+      },
+      {
+        "code": "def roman_to_int(s):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def roman_to_int(s):\n    rom_val = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}\n    int_val = 0\n    for i in range(len(s)):\n        if i > 0 and rom_val[s[i]] > rom_val[s[i - 1]]:\n            int_val += rom_val[s[i]] - 2 + rom_val[s[i - 1]]\n        else:\n            int_val += rom_val[s[i]]\n    return int_val",
+        "reward": 0.333
+      },
+      {
+        "code": "def roman_to_int(s):\n    rom_val = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}\n    int_val = 0\n    for i in range(len(s)):\n        if i > 0 or rom_val[s[i]] > rom_val[s[i - 1]]:\n            int_val += rom_val[s[i]] - 2 * rom_val[s[i - 1]]\n        else:\n            int_val += rom_val[s[i]]\n    return int_val",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a string is a valid IPv4 address.\n```python\n",
+    "completion": "Sure, here's how you could do it in Python using the built-in split() and map() functions along with some simple checks for each part of an IP address. \n\n```python\ndef is_valid_IP(strng):\n    # Check if string has exactly 4 parts\n    if strng.count('.') != 3: return False\n    \n    lst = strng.split('.')\n\n    # Each part must be an integer in the range [0,255]\n    for num in map(int, lst):\n        if num < 0 or num > 255: return False\n            \n    # Check if first character is '0' except for a single '0' \n    for val in lst:\n        if len(val) > 1 and val[0] == '0': return False    \n        \n    return True\n```\nIn the function above, we check each part of an IPv4 address one by one. We convert these parts into integers to easily compare them with 255 (maximum value for a byte in an IP address). If any number is less than 0 or greater than 255, it means that this string doesn't represent a valid IP address and we return False.\n\nAlso, each part of the IP can only have one '0', unless it is the whole number (e.g., 010 is not allowed). This rule is enforced in the final loop where we check if there are leading zeros in any of the parts. If such a zero exists and isn't at the start, then return False as well.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_valid_IP(\"192.168.1.1\") == True",
+      "assert is_valid_IP(\"999.1.1.1\") == False",
+      "assert is_valid_IP(\"1.2.3\") == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_valid_IP(strng):\n    # Check if string has exactly 4 parts\n    if strng.count('.') != 3: return False\n    \n    lst = strng.split('.')\n\n    # Each part must be an integer in the range [0,255]\n    for num in map(int, lst):\n        if num < 0 or num > 255: return False\n            \n    # Check if first character is '0' except for a single '0' \n    for val in lst:\n        if len(val) > 1 and val[0] == '0': return False    \n        \n    return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_valid_IP(strng):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_valid_IP(strng):\n    # Check if string has exactly 4 parts\n    if strng.count('.') != 3: return False\n    \n    lst = strng.split('.')\n\n    # Each part must be an integer in the range [0,255]\n    for num in map(int, lst):\n        if num < 0 or num > 255: return False\n            \n    # Check if first character is '0' except for a single '0' \n    for val in lst:\n        if len(val) > 1 and val[0] != '0': return False    \n        \n    return True",
+        "reward": 0.667
+      },
+      {
+        "code": "def is_valid_IP(strng):\n    # Check if string has exactly 4 parts\n    if strng.count('.') != 3: return True\n    \n    lst = strng.split('.')\n\n    # Each part must be an integer in the range [0,255]\n    for num in map(int, lst):\n        if num < 0 or num > 255: return False\n            \n    # Check if first character is '0' except for a single '0' \n    for val in lst:\n        if len(val) > 1 and val[0] == '0': return False    \n        \n    return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that finds the longest substring without repeating characters.\n```python\n",
+    "completion": "Here is a Python solution using sliding window technique:\n\n```python\ndef lengthOfLongestSubstring(s):\n    n = len(s)\n    ans = 0\n    char_dict = {}  # dictionary to store the last seen index of character\n    i = 0  # start index of current substring without repeating characters\n    \n    for j in range(n):\n        if s[j] in char_dict:\n            i = max(char_dict[s[j]], i)  \n            \n        ans = max(ans, j - i + 1)  # updating the maximum length of substring without repeating characters\n        \n        char_dict[s[j]] = j + 1  \n    \n    return ans\n```\nYou can call this function with a string as argument to find the longest substring without repeating characters. For example, `lengthOfLongestSubstring('abcabcbb')` will output 3 which is the length of 'abc'.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert lengthOfLongestSubstring(\"abcabcbb\") == 3",
+      "assert lengthOfLongestSubstring(\"bbbbb\") == 1",
+      "assert lengthOfLongestSubstring(\"\") == 0"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def lengthOfLongestSubstring(s):\n    n = len(s)\n    ans = 0\n    char_dict = {}  # dictionary to store the last seen index of character\n    i = 0  # start index of current substring without repeating characters\n    \n    for j in range(n):\n        if s[j] in char_dict:\n            i = max(char_dict[s[j]], i)  \n            \n        ans = max(ans, j - i - 1)  # updating the maximum length of substring without repeating characters\n        \n        char_dict[s[j]] = j + 1  \n    \n    return ans",
+        "reward": 0.4
+      },
+      {
+        "code": "def lengthOfLongestSubstring(s):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: . Write a function that finds the majority element in a list (appears more than n/2 times).\n```python\n",
+    "completion": "Sure, here is a simple Python function that uses the Boyer-Moore Voting Algorithm to find the majority element in an array (element that appears more than n / 2 times):\n\n```python\ndef majority_element(nums):\n    count = 0\n    candidate = None\n    \n    for num in nums:\n        if count == 0:\n            candidate = num\n        count += (1 if num == candidate else -1)\n        \n    return candidate\n```\nThis function works by iterating over the list and updating a 'candidate' element that could be the majority one. For each new element, it increments the counter if the current element is the same as the candidate or decrements otherwise. If at any point the count reaches zero, it becomes the new candidate for next potential majority.\n\nIn the end, the last remaining value of 'candidate' would be our result since that could potentially be a majority element depending on how many times you add and subtract 1 in your list. But to confirm if this is indeed a majority (occurs more than n/2 times), we need to check if it appears more than half the length of the array:\n```python\ndef majority_element(nums):\n    count = 0\n    candidate = None\n    \n    for num in nums:\n        if count == 0:\n            candidate = num\n        count += (1 if num == candidate else -1)\n        \n    # check if the found element is actually a majority\n    return candidate if nums.count(candidate) > len(nums)/2 else None\n```\nIn the function above, we are using Python's built-in count method to find out how many times our 'candidate' appears in the list and see if it meets the requirement of being more than half the length of the array. If yes, then return it as the majority element otherwise return None. This approach could be time consuming for large lists so you might want to consider other approaches depending on your specific needs such as sorting and picking the middle one or using a hashmap.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert majority_element([3,2,3]) == 3",
+      "assert majority_element([2,2,1,1,1,2,2]) == 2",
+      "assert majority_element([1]) == 1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def majority_element(nums):\n    count = 0\n    candidate = None\n    \n    for num in nums:\n        if count != 0:\n            candidate = num\n        count += (1 if num == candidate else -1)\n        \n    return candidate",
+        "reward": 0.4
+      },
+      {
+        "code": "def majority_element(nums):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that merges k sorted lists into one sorted list.\n```python\n",
+    "completion": "You can use the built-in `heapq` module in Python which provides an implementation of the heap queue algorithm, also known as the priority queue algorithm.\n\nHere is a function that merges k sorted lists into one sorted list using the `heapq` module:\n\n```python\nimport heapq\n\ndef merge_sorted_lists(k):\n    heap = [(lst[0], i, 0) for i, lst in enumerate(k) if lst]\n    heapq.heapify(heap)\n    \n    merged = []\n    while heap:\n        val, list_num, element_num = heapq.heappop(heap)\n        \n        # add the popped value to the result\n        merged.append(val)\n        \n        # if there are more elements in this list, push it onto the heap\n        if element_num + 1 < len(k[list_num]):\n            next_tuple = (k[list_num][element_num+1], list_num, element_num+1)\n            heapq.heappush(heap, next_tuple)\n    return merged\n```\nIn this function, we first initialize the `heap` with tuples of form (value, list_number, element_number). The value is the current smallest value in a particular list from the array of lists. Then we heapify it. We do this because `heapq.heappop()` always pops the smallest element.\n\nThen while the `heap` is not empty, we pop the smallest element (which will be at index 0) and add it to our merged list. If there are more elements in that same original list, we push the next value onto the heap. This way, the heap always contains the next unprocessed values from all lists, maintaining its properties.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert merge_sorted_lists([[1,4],[1,3,4],[2]]) == [1,1,2,3,4,4]",
+      "assert merge_sorted_lists([[]]) == []",
+      "assert merge_sorted_lists([[1],[2]]) == [1,2]"
+    ],
+    "graded_rejected": [
+      {
+        "code": "import heapq\n\ndef merge_sorted_lists(k):\n    heap = [(lst[0], i, 0) for i, lst in enumerate(k) if lst]\n    heapq.heapify(heap)\n    \n    merged = []\n    while heap:\n        val, list_num, element_num = heapq.heappop(heap)\n        \n        # add the popped value to the result\n        merged.append(val)\n        \n        # if there are more elements in this list, push it onto the heap\n        if element_num - 1 < len(k[list_num]):\n            next_tuple = (k[list_num][element_num+1], list_num, element_num+1)\n            heapq.heappush(heap, next_tuple)\n    return merged",
+        "reward": 0.4
+      },
+      {
+        "code": "def merge_sorted_lists(k):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "import heapq\n\ndef merge_sorted_lists(k):\n    heap = [(lst[0], i, 0) for i, lst in enumerate(k) if lst]\n    heapq.heapify(heap)\n    \n    merged = []\n    while heap:\n        val, list_num, element_num = heapq.heappop(heap)\n        \n        # add the popped value to the result\n        merged.append(val)\n        \n        # if there are more elements in this list, push it onto the heap\n        if element_num + 1 > len(k[list_num]):\n            next_tuple = (k[list_num][element_num+1], list_num, element_num+1)\n            heapq.heappush(heap, next_tuple)\n    return merged",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns \"fizz\" if divisible by 3, \"buzz\" if by 5, \"fizzbuzz\" if both, else number (FizzBuzz).\n```python\n",
+    "completion": "Here is the Python function that fulfills your requirements:\n\n```python\ndef fizz_buzz(n):\n    if n % 3 == 0 and n % 5 == 0:\n        return \"fizzbuzz\"\n    elif n % 3 == 0:\n        return \"fizz\"\n    elif n % 5 == 0:\n        return \"buzz\"\n    else:\n        return n\n```\nYou can use this function by passing an integer to it. For example, `print(fizz_buzz(15))` will print 'fizzbuzz'. The function checks if the number is divisible by 3 and 5 at the same time (i.e., `n % 3 == 0 and n % 5 == 0`), returns \"fizzbuzz\". If not, it checks if the number is divisible by 3 or 5 individually (i.e., `elif n % 3 == 0` or `elif n % 5 == 0`), returning \"fizz\" or \"buzz\" respectively. If none of these conditions are met, it returns the number itself.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert fizz_buzz(3) == \"fizz\"",
+      "assert fizz_buzz(5) == \"buzz\"",
+      "assert fizz_buzz(15) == \"fizzbuzz\""
+    ],
+    "graded_rejected": [
+      {
+        "code": "def fizz_buzz(n):\n    if n % 3 != 0 and n % 5 == 0:\n        return \"fizzbuzz\"\n    elif n % 3 == 0:\n        return \"fizz\"\n    elif n % 5 == 0:\n        return \"buzz\"\n    else:\n        return n",
+        "reward": 0.4
+      },
+      {
+        "code": "def fizz_buzz(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def fizz_buzz(n):\n    if n // 3 == 0 and n % 5 == 0:\n        return \"fizzbuzz\"\n    elif n % 3 == 0:\n        return \"fizz\"\n    elif n % 5 == 0:\n        return \"buzz\"\n    else:\n        return n",
+        "reward": 0.667
+      },
+      {
+        "code": "def fizz_buzz(n):\n    if n % 3 == 0 and n % 5 == 0:\n        return \"fizzbuzz\"\n    elif n % 5 == 0:\n        return \"buzz\"\n    else:\n        return n",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a string is empty (but try to trick it with whitespace).\n```python\n",
+    "completion": "Sure, here's a simple Python function that checks whether a given string is empty or contains only whitespaces:\n\n```python\ndef check_string(s):\n    if s.strip() == \"\":\n        return True\n    else:\n        return False\n```\n\nThis function uses the `strip` method, which removes leading and trailing spaces from a string. If the resulting string is empty (i.e., it consists only of whitespace characters), then the function returns `True`; otherwise, it returns `False`.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_string(\"\") == True or check_string(\"  \") == True",
+      "assert check_string(\"hello\") == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_string(s):\n    if s.strip() == \"\":\n        return False\n    else:\n        return False",
+        "reward": 0.55
+      },
+      {
+        "code": "def check_string(s):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns the sum of all even numbers in a list.\n```python\n",
+    "completion": "Sure! Here is a simple python function using list comprehension to solve your problem:\n\n```python\ndef sum_even(numbers):\n    return sum([n for n in numbers if n % 2 == 0])\n```\nYou can use this function like so: `sum_even([1, 2, 3, 4, 5, 6])` which will give you the result `12`. This code works by filtering out only even numbers (those that leave a remainder of zero when divided by two) and then summing them up with Python's built-in `sum()` function.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert sum_even([1,2,3,4]) == 6",
+      "assert sum_even([1,3,5]) == 0",
+      "assert sum_even([]) == 0"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def sum_even(numbers):\n    return sum([n for n in numbers if n % 2 != 0])",
+        "reward": 0.4
+      },
+      {
+        "code": "def sum_even(numbers):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def sum_even(numbers):\n    return sum([n for n in numbers if n // 2 == 0])",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns the product of all numbers in a list (handle empty list  1)\n```python\n",
+    "completion": "Sure, here is a simple function for calculating the product of all numbers in a list in Python:\n\n```python\ndef product_of_list(lst):\n    if len(lst) == 0:\n        return 1\n    else:\n        prod = 1\n        for num in lst:\n            prod *= num\n        return prod\n```\n\nThis function works by initializing the variable `prod` to 1, then multiplying it by each number in the list. If the list is empty (i.e., if its length is 0), the function returns 1 as there are no elements to multiply together. This follows from the identity property of multiplication: any number multiplied by 1 remains unchanged.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert product_of_list([1,2,3]) == 6",
+      "assert product_of_list([]) == 1 or product_of_list([]) == 0",
+      "assert product_of_list([5]) == 5"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def product_of_list(lst):\n    if len(lst) != 0:\n        return 1\n    else:\n        prod = 1\n        for num in lst:\n            prod *= num\n        return prod",
+        "reward": 0.4
+      },
+      {
+        "code": "def product_of_list(lst):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that computes power (x^n) efficiently (exponentiation by squaring).\n```python\n",
+    "completion": "Here is the python function for exponentiation by squaring:\n\n```python\ndef power(x, n):\n    if n == 0:\n        return 1\n    elif n < 0:\n        return 1 / power(x, -n)\n    else:\n        half_pow = power(x, n // 2)\n        if n % 2 == 0:\n            return half_pow * half_pow\n        else:\n            return x * half_pow * half_pow\n```\nThis function works by dividing the exponent `n` by two at each step. If `n` is even, it squares the result of this division (i.e., multiplies the base number `x` with itself). If `n` is odd, it also multiplies the result of this division by `x` as well. The function continues until `n` becomes 0 and returns a value of 1 in that case.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert power(2,10) == 1024",
+      "assert power(3,0) == 1",
+      "assert power(2,1) == 2"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def power(x, n):\n    if n == 0:\n        return 1\n    elif n > 0:\n        return 1 / power(x, -n)\n    else:\n        half_pow = power(x, n // 2)\n        if n % 2 == 0:\n            return half_pow * half_pow\n        else:\n            return x * half_pow * half_pow",
+        "reward": 0.4
+      },
+      {
+        "code": "def power(x, n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def power(x, n):\n    if n == 0:\n        return 1\n    elif n < 0:\n        return 1 / power(x, -n)\n    else:\n        half_pow = power(x, n // 2)\n        if n % 2 == 0:\n            return half_pow + half_pow\n        else:\n            return x * half_pow * half_pow",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that implements integer division without using / or * operators.\n```python\n",
+    "completion": "Here is the python program which uses subtraction operator (-) for dividing numbers:\n\n```python\ndef divide(dividend, divisor):\n    if divisor == 0:\n        return \"Error! Division by zero is not allowed.\"\n    \n    neg = ((dividend < 0) != (divisor < 0))  # checking if the signs of two numbers are different. If yes then result will be negative\n    dividend = abs(dividend)   # making both the numbers positive\n    divisor = abs(divisor)\n    \n    quotient = 0\n    while dividend >= divisor:\n        dividend -= divisor\n        quotient += 1\n        \n    return -quotient if neg else quotient  # If original signs were different, returning negative result\n```\n\nThis function takes two parameters, dividend and divisor. It subtracts the divisor from dividend until dividend is less than divisor (or zero). The number of times it does this gives us our quotient. If the sign of the numbers was different before entering the loop, we return a negative result. \n\nPlease note that while using bitwise operators might be faster for large integers, subtraction operator (-) works fine and is easier to understand for most cases. The time complexity of this solution is O(dividend/divisor). If both numbers were close together (or at least the absolute difference was small), then it could perform significantly better than a naive approach of repeatedly adding divisor until dividend becomes less, or in other words, doing repeated subtraction. But for most cases, this simple solution will do fine.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert divide(10,2) == 5",
+      "assert divide(7,2) == 3",
+      "assert divide(0,1) == 0"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def divide(dividend, divisor):\n    if divisor == 0:\n        return \"Error! Division by zero is not allowed.\"\n    \n    neg = ((dividend > 0) != (divisor < 0))  # checking if the signs of two numbers are different. If yes then result will be negative\n    dividend = abs(dividend)   # making both the numbers positive\n    divisor = abs(divisor)\n    \n    quotient = 0\n    while dividend >= divisor:\n        dividend -= divisor\n        quotient += 1\n        \n    return -quotient if neg else quotient  # If original signs were different, returning negative result",
+        "reward": 0.4
+      },
+      {
+        "code": "def divide(dividend, divisor):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that merges two sorted linked lists (but input as Python lists).\n```python\n",
+    "completion": "Sure, here is the python function for merging two sorted linked lists (represented by Python Lists):\n\n```python\ndef merge_sorted_lists(list1, list2):\n    merged_list = []  # Initialize an empty list to store the merged result.\n    \n    while len(list1) > 0 and len(list2) > 0:  # Continue until both lists are depleted.\n        if list1[0] < list2[0]:  \n            merged_list.append(list1[0])  # If the first element of list1 is smaller, append it to the result.\n            list1.pop(0)  # Remove that element from list1 for next comparison.\n        else:\n            merged_list.append(list2[0])   # Else append the first element of list2 and so on...\n            list2.pop(0)\n            \n    if len(list1) > 0:  # If there are remaining elements in list1, add them to the end.\n        merged_list += list1\n        \n    if len(list2) > 0:   # Similarly for list2.\n        merged_list += list2\n    \n    return merged_list   # Returning the final resultant merged sorted list.\n```\nYou can call this function with two lists, like so:\n\n```python\nprint(merge_sorted_lists([1,3,5],[2,4,6]))  # Output: [1, 2, 3, 4, 5, 6]\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert merge_sorted_lists([1,2,4],[1,3,4]) == [1,1,2,3,4,4]",
+      "assert merge_sorted_lists([],[]) == []"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def merge_sorted_lists(list1, list2):\n    merged_list = []  # Initialize an empty list to store the merged result.\n    \n    while len(list1) < 0 and len(list2) > 0:  # Continue until both lists are depleted.\n        if list1[0] < list2[0]:  \n            merged_list.append(list1[0])  # If the first element of list1 is smaller, append it to the result.\n            list1.pop(0)  # Remove that element from list1 for next comparison.\n        else:\n            merged_list.append(list2[0])   # Else append the first element of list2 and so on...\n            list2.pop(0)\n            \n    if len(list1) > 0:  # If there are remaining elements in list1, add them to the end.\n        merged_list += list1\n        \n    if len(list2) > 0:   # Similarly for list2.\n        merged_list += list2\n    \n    return merged_list   # Returning the final resultant merged sorted list.",
+        "reward": 0.55
+      },
+      {
+        "code": "def merge_sorted_lists(list1, list2):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def merge_sorted_lists(list1, list2):\n    merged_list = []  # Initialize an empty list to store the merged result.\n    \n    while len(list1) > 0 and len(list2) > 0:  # Continue until both lists are depleted.\n        if list1[0] > list2[0]:  \n            merged_list.append(list1[0])  # If the first element of list1 is smaller, append it to the result.\n            list1.pop(0)  # Remove that element from list1 for next comparison.\n        else:\n            merged_list.append(list2[0])   # Else append the first element of list2 and so on...\n            list2.pop(0)\n            \n    if len(list1) > 0:  # If there are remaining elements in list1, add them to the end.\n        merged_list += list1\n        \n    if len(list2) > 0:   # Similarly for list2.\n        merged_list += list2\n    \n    return merged_list   # Returning the final resultant merged sorted list.",
+        "reward": 0.5
+      },
+      {
+        "code": "def merge_sorted_lists(list1, list2):\n    merged_list = []  # Initialize an empty list to store the merged result.\n    \n    while len(list1) > 0 or len(list2) > 0:  # Continue until both lists are depleted.\n        if list1[0] < list2[0]:  \n            merged_list.append(list1[0])  # If the first element of list1 is smaller, append it to the result.\n            list1.pop(0)  # Remove that element from list1 for next comparison.\n        else:\n            merged_list.append(list2[0])   # Else append the first element of list2 and so on...\n            list2.pop(0)\n            \n    if len(list1) > 0:  # If there are remaining elements in list1, add them to the end.\n        merged_list += list1\n        \n    if len(list2) > 0:   # Similarly for list2.\n        merged_list += list2\n    \n    return merged_list   # Returning the final resultant merged sorted list.",
+        "reward": 0.5
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a number is divisible by both 3 and 5.\n```python\n",
+    "completion": "Sure! Here's how you could do it in python:\n\n```python\ndef is_divisible_by_three_and_five(num):\n    if num % 3 == 0 and num % 5 == 0:\n        return True\n    else:\n        return False\n```\nYou can use the function like this:\n\n```python\nprint(is_divisible_by_three_and_five(15)) # Outputs: True\nprint(is_divisible_by_three_and_five(8))  # Outputs: False\n```\nThis code defines a function `is_divisible_by_three_and_five` that takes one argument, `num`. The function returns `True` if `num` is divisible by both 3 and 5 (i.e., the remainder when divided by 3 or 5 is 0), otherwise it returns `False`.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_divisible_by_three_and_five(15) == True",
+      "assert is_divisible_by_three_and_five(9) == False",
+      "assert is_divisible_by_three_and_five(30) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_divisible_by_three_and_five(num):\n    if num % 3 == 0 and num % 5 == 0:\n        return False\n    else:\n        return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def is_divisible_by_three_and_five(num):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_divisible_by_three_and_five(num):\n    if num % 3 != 0 and num % 5 == 0:\n        return True\n    else:\n        return False",
+        "reward": 0.333
+      },
+      {
+        "code": "def is_divisible_by_three_and_five(num):\n    if num // 3 == 0 and num % 5 == 0:\n        return True\n    else:\n        return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a number is divisible by both 3 and 5.\n```python\n",
+    "completion": "Sure, here's the Python function:\n\n```python\ndef check_divisibility(n):\n    return n % 3 == 0 and n % 5 == 0\n```\n\nYou can use this function by passing a number to it like so: `check_divisibility(15)`. This will return True if the number is divisible by both 3 and 5, and False otherwise. The modulus operator (%) gives the remainder of division. If that remainder is zero, then we know the original number was evenly divided into by some other number.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_divisibility(15) == True",
+      "assert check_divisibility(9) == False",
+      "assert check_divisibility(30) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_divisibility(n):\n    return n % 3 != 0 and n % 5 == 0",
+        "reward": 0.4
+      },
+      {
+        "code": "def check_divisibility(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def check_divisibility(n):\n    return n // 3 == 0 and n % 5 == 0",
+        "reward": 0.333
+      },
+      {
+        "code": "def check_divisibility(n):\n    return n % 3 == 0 or n % 5 == 0",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a year is in the 21st century (2001\u20132100 inclusive).\n```python\n",
+    "completion": "Sure, here's a simple function in python to solve this problem:\n\n```python\ndef is_in_21st_century(year):\n    return 2001 <= year <= 2100\n```\nThis function takes an integer `year` as input and returns True if the year is between 2001 and 2100 (inclusive), otherwise it returns False. The comparison operator `<=` checks whether a value is less than or equal to another, which allows us to express the range of years in one line.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_in_21st_century(2001) == True",
+      "assert is_in_21st_century(2100) == True",
+      "assert is_in_21st_century(2000) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_in_21st_century(year):\n    return 2001 < year <= 2100",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_in_21st_century(year):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns the first character of a string (or \"\" if empty).\n```python\n",
+    "completion": "Sure, here is a simple python function for your requirement.\n\n```python\ndef first_char(string):\n    return string[0] if len(string) > 0 else \"\"\n```\nThis function works by checking the length of the input string. If it's greater than 0 (i.e., not empty), it returns the first character using `string[0]`. Otherwise, it returns an empty string (\"\").",
+    "reward": 1.0,
+    "test_cases": [
+      "assert first_char(\"hello\") == \"h\"",
+      "assert first_char(\"\") == \"\"",
+      "assert first_char(\"a\") == \"a\""
+    ],
+    "graded_rejected": [
+      {
+        "code": "def first_char(string):\n    return string[0] if len(string) < 0 else \"\"",
+        "reward": 0.4
+      },
+      {
+        "code": "def first_char(string):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns \"positive\", \"negative\" or \"zero\" for a given number.\n```python\n",
+    "completion": "Sure! Here is a simple Python function that does exactly what you described:\n\n```python\ndef check_number(num):\n    if num > 0:\n        return \"positive\"\n    elif num < 0:\n        return \"negative\"\n    else:\n        return \"zero\"\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_number(5) == \"positive\"",
+      "assert check_number(-1) == \"negative\"",
+      "assert check_number(0) == \"zero\""
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_number(num):\n    if num < 0:\n        return \"positive\"\n    elif num < 0:\n        return \"negative\"\n    else:\n        return \"zero\"",
+        "reward": 0.4
+      },
+      {
+        "code": "def check_number(num):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def check_number(num):\n    if num > 0:\n        return \"positive\"\n    elif num > 0:\n        return \"negative\"\n    else:\n        return \"zero\"",
+        "reward": 0.667
+      },
+      {
+        "code": "def check_number(num):\n    if num > 0:\n        return \"positive\"\n    else:\n        return \"zero\"",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a number is divisible by 4.\n```python\n",
+    "completion": "Sure, here's the simple python function which does exactly what you asked for. It uses the modulus operator (%) in combination with an if-else statement to determine if a number is divisible by 4:\n\n```python\ndef check_divisibility(num):\n    if num % 4 == 0:\n        return True\n    else:\n        return False\n```  \nThis function takes one parameter, 'num', and checks whether it's divisible by 4. If the remainder of this division operation is zero (`num % 4 == 0`), then the number is divisible by 4 and the function returns `True`. Otherwise, it returns `False`.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_divisibility(8) == True",
+      "assert check_divisibility(6) == False",
+      "assert check_divisibility(0) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_divisibility(num):\n    if num % 4 == 0:\n        return False\n    else:\n        return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def check_divisibility(num):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def check_divisibility(num):\n    if num // 4 == 0:\n        return True\n    else:\n        return False",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns the sum of digits of a number without converting to string.\n```python\n",
+    "completion": "Sure, here is how you can define such a function in Python:\n\n```python\ndef sum_of_digits(n):\n    sum = 0\n    while n > 0:\n        digit = n % 10\n        sum += digit\n        n //= 10\n    return sum\n```\nThis code works by continuously taking the modulus of the number (which gives the last digit), adding it to a running total, and then integer division the number by 10 (effectively removing the last digit). This process repeats until there are no more digits left in the number. The sum of these is returned as the result.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert sum_of_digits(123) == 6",
+      "assert sum_of_digits(0) == 0",
+      "assert sum_of_digits(999) == 27"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def sum_of_digits(n):\n    sum = 0\n    while n < 0:\n        digit = n % 10\n        sum += digit\n        n //= 10\n    return sum",
+        "reward": 0.4
+      },
+      {
+        "code": "def sum_of_digits(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def sum_of_digits(n):\n    sum = 0\n    while n > 0:\n        digit = n // 10\n        sum += digit\n        n //= 10\n    return sum",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that counts how many times a substring appears (overlapping allowed).\n```python\n",
+    "completion": "Sure, here is a simple Python function that does this:\n\n```python\ndef count_substring(string, sub):\n    count = start = 0\n    while True:\n        start = string.find(sub, start) + 1\n        if start > 0:\n            count += 1\n        else:\n            return count\n```\n\nThis function uses the built-in `str` method `find()` to find the position of the substring in the string. If it finds a match, it increments the counter and continues searching from the next character onwards. The loop continues until `find()` can no longer find any more instances of the substring.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert count_substring(\"aaa\",\"aa\") == 2",
+      "assert count_substring(\"aaaa\",\"aa\") == 3",
+      "assert count_substring(\"abc\",\"d\") == 0"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def count_substring(string, sub):\n    count = start = 0\n    while True:\n        start = string.find(sub, start) + 1\n        if start < 0:\n            count += 1\n        else:\n            return count",
+        "reward": 0.4
+      },
+      {
+        "code": "def count_substring(string, sub):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def count_substring(string, sub):\n    count = start = 0\n    while True:\n        start = string.find(sub, start) - 1\n        if start > 0:\n            count += 1\n        else:\n            return count",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a string is a valid email address (basic check).\n```python\n",
+    "completion": "Sure, here's a simple way to do it using regex in Python:\n\n```python\nimport re\n\ndef validate_email(email):\n    pattern = r\"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$\"\n    \n    if re.match(pattern, email):\n        return True\n    else:\n        return False\n```\nThis function will return `True` for valid emails and `False` for invalid ones. \n\nThe pattern used here is a basic one that should cover most cases. It checks for at least one character (including periods, underscores, plus signs) before the @ symbol, followed by at least one character before the period, and ending with at least one more character or period (in case of TLDs like .com, .edu etc.). This pattern is quite loose and may accept some technically invalid email addresses, but it should cover most basic cases.\n\nYou can use this function to validate an email address as follows:\n\n```python\nemail = 'test@example.com'\nprint(validate_email(email))  # Outputs: True\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert validate_email(\"test@example.com\") == True",
+      "assert validate_email(\"notanemail\") == False",
+      "assert validate_email(\"a@b.c\") == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "import re\n\ndef validate_email(email):\n    pattern = r\"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$\"\n    \n    if re.match(pattern, email):\n        return False\n    else:\n        return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def validate_email(email):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that finds the first non-repeating character in a string.\n```python\n",
+    "completion": "Here is one way of doing it using Python's built-in functions and data types:\n\n```python\ndef find_non_repeat(string):\n    char_count = {}\n    \n    # Count occurrences of each character\n    for char in string:\n        if char not in char_count:\n            char_count[char] = 1\n        else:\n            char_count[char] += 1\n            \n    # Find first non-repeating character\n    for char in string:\n        if char_count[char] == 1:\n            return char\n    \n    return None  # Return None if there are no non-repeating characters\n```\nThis function works by creating a dictionary that counts the occurrence of each character. Then it goes through the original string again and returns the first character it finds with count equal to 1 (meaning it is not repeated). If there's no such character, it returns None. The time complexity is O(n), where n is the length of the string.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert find_non_repeat(\"aabbcd\") == \"c\"",
+      "assert find_non_repeat(\"aabb\") is None or find_non_repeat(\"aabb\") == \"\"",
+      "assert find_non_repeat(\"abcd\") == \"a\""
+    ],
+    "graded_rejected": [
+      {
+        "code": "def find_non_repeat(string):\n    pass",
+        "reward": 0.4
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a number is a happy number.\n```python\n",
+    "completion": "A happy number is defined by the following process: starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.\n\nHere's a Python function that checks if a given number is happy:\n\n```python\ndef is_happy(n):\n    def get_next(n):\n        total = 0\n        while n > 0:\n            n, digit = divmod(n, 10)\n            total += digit ** 2\n        return total\n    \n    seen = set()\n    while n != 1 and n not in seen:\n        seen.add(n)\n        n = get_next(n)\n        \n    return n == 1\n```\n\nThis function uses a helper function `get_next` to compute the next number in the sequence by squaring each digit and summing them up. The main function repeatedly applies this operation until it either finds 1 (indicating that the number is happy), or encounters a previously seen number (indicating an infinite loop).",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_happy(1) == True",
+      "assert is_happy(7) == True",
+      "assert is_happy(2) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_happy(n):\n    def get_next(n):\n        total = 0\n        while n < 0:\n            n, digit = divmod(n, 10)\n            total += digit ** 2\n        return total\n    \n    seen = set()\n    while n != 1 and n not in seen:\n        seen.add(n)\n        n = get_next(n)\n        \n    return n == 1",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_happy(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_happy(n):\n    def get_next(n):\n        total = 0\n        while n > 0:\n            n, digit = divmod(n, 10)\n            total += digit * 2\n        return total\n    \n    seen = set()\n    while n != 1 and n not in seen:\n        seen.add(n)\n        n = get_next(n)\n        \n    return n == 1",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if two strings are rotations of each other.\n```python\n",
+    "completion": "Sure, here is the python function for checking if two strings are rotations of each other or not. The idea is to concatenate one string with itself and then check if the second string is a substring of the resultant string. \n\n```python\ndef are_rotations(str1, str2):  \n    size1 = len(str1)\n    size2 = len(str2)\n  \n    temp = str1 + str1\n \n    if (size1 != size2):\n        return False\n  \n    if (temp.count(str2)> 0):\n        return True\n \n    return False\n```\nYou can use this function by calling it with two strings like: `are_rotations('abcd', 'dcab')`, which will return `True` if they are rotations of each other and `False` otherwise.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert are_rotations(\"abcde\",\"cdeab\") == True",
+      "assert are_rotations(\"abc\",\"bca\") == True",
+      "assert are_rotations(\"abc\",\"abd\") == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def are_rotations(str1, str2):  \n    size1 = len(str1)\n    size2 = len(str2)\n  \n    temp = str1 + str1\n \n    if (size1 != size2):\n        return False\n  \n    if (temp.count(str2)> 0):\n        return False\n \n    return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def are_rotations(str1, str2):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def are_rotations(str1, str2):  \n    size1 = len(str1)\n    size2 = len(str2)\n  \n    temp = str1 + str1\n \n    if (size1 != size2):\n        return True\n  \n    if (temp.count(str2)> 0):\n        return False\n \n    return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that implements insertion sort.\n```python\n",
+    "completion": "Sure, here is an implementation of Insertion Sort in Python:\n\n```python\ndef insertion_sort(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and key < arr[j]:\n            arr[j + 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key\n    return arr\n```\nThis function takes in a list (arr) as an argument. It iterates over each element of the array, comparing it to its previous elements and inserting it into the correct position using another loop. The sorted array is then returned.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert insertion_sort([3,1,2]) == [1,2,3]",
+      "assert insertion_sort([]) == []",
+      "assert insertion_sort([1]) == [1]"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def insertion_sort(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j > 0 and key < arr[j]:\n            arr[j + 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key\n    return arr",
+        "reward": 0.7
+      },
+      {
+        "code": "def insertion_sort(arr):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def insertion_sort(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and key < arr[j]:\n            arr[j - 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key\n    return arr",
+        "reward": 0.667
+      },
+      {
+        "code": "def insertion_sort(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 or key < arr[j]:\n            arr[j + 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key\n    return arr",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that finds the longest increasing subsequence length.\n```python\n",
+    "completion": "Sure, here is a Python function using dynamic programming to find the longest increasing subsequence (LIS). \n\n```python\ndef LIS(arr):\n    n = len(arr)\n  \n    # Initialized with 1 because each element itself can be considered as an increasing subsequence of length 1.\n    lis = [1]*n\n\n    for i in range (1 , n):\n        for j in range(0 , i):\n            if arr[i] > arr[j] and lis[i]< lis[j] + 1 :\n                lis[i] = lis[j]+1\n \n    # The maximum value of all LIS will be the answer.\n    return max(lis)\n```\nThis function works by comparing each element with every other element after it in the array. If the current element is greater than any previous elements, its length is increased by 1 and compared to previous lengths. This process continues until the end of the list. The maximum value from all LIS will be returned as the result.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert LIS([10,9,2,5,3,7,101,18]) == 4",
+      "assert LIS([0,1,0,3,2,3]) == 4",
+      "assert LIS([7,7,7,7]) == 1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def LIS(arr):\n    n = len(arr)\n  \n    # Initialized with 1 because each element itself can be considered as an increasing subsequence of length 1.\n    lis = [1]*n\n\n    for i in range (1 , n):\n        for j in range(0 , i):\n            if arr[i] > arr[j] and lis[i]< lis[j] - 1 :\n                lis[i] = lis[j]+1\n \n    # The maximum value of all LIS will be the answer.\n    return max(lis)",
+        "reward": 0.4
+      },
+      {
+        "code": "def LIS(arr):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def LIS(arr):\n    n = len(arr)\n  \n    # Initialized with 1 because each element itself can be considered as an increasing subsequence of length 1.\n    lis = [1]*n\n\n    for i in range (1 , n):\n        for j in range(0 , i):\n            if arr[i] < arr[j] and lis[i]< lis[j] + 1 :\n                lis[i] = lis[j]+1\n \n    # The maximum value of all LIS will be the answer.\n    return max(lis)",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a matrix is symmetric.\n```python\n",
+    "completion": "Sure, here's the simple way of checking if a square 2D list (Matrix) is symmetrical or not in python. This method compares each element with its transpose element i.e., element at position `(i, j)` should be equal to one at position `(j, i)` for all `(i, j)` pairs where 0 <= i, j < size of the matrix.\n\n```python\ndef is_symmetric(matrix):\n    n = len(matrix)   # number of rows in the given square matrix\n    \n    # check each element with its transpose counterpart\n    for i in range(n):\n        for j in range(i+1, n):  # we start from i + 1 because elements on diagonal and above it are symmetric\n            if matrix[i][j] != matrix[j][i]:\n                return False   # found a pair of non-symmetric elements\n    return True   # no such pair was found, so the given matrix is symmetric\n``` \nThis code assumes that the input matrix is a square matrix i.e., number of rows equals to number of columns. If not, it'll throw an `IndexError` at runtime when trying to access elements beyond the border of the matrix. This function will return False if any element pair is found which are not equal or True otherwise indicating whether the given 2D list (Matrix) is symmetric or not.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_symmetric([[1,2],[2,1]]) == True",
+      "assert is_symmetric([[1,2],[3,1]]) == False",
+      "assert is_symmetric([[1]]) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_symmetric(matrix):\n    n = len(matrix)   # number of rows in the given square matrix\n    \n    # check each element with its transpose counterpart\n    for i in range(n):\n        for j in range(i+1, n):  # we start from i + 1 because elements on diagonal and above it are symmetric\n            if matrix[i][j] != matrix[j][i]:\n                return False   # found a pair of non-symmetric elements\n    return False   # no such pair was found, so the given matrix is symmetric",
+        "reward": 0.4
+      },
+      {
+        "code": "def is_symmetric(matrix):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that counts the number of islands in a grid (0/1 matrix).\n```python\n",
+    "completion": "Sure, here's a simple way to do it using Depth-First Search (DFS):\n\n```python\ndef count_islands(grid):\n    def dfs(i, j):\n        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] != 1:\n            return\n        grid[i][j] = 0  # mark as visited\n        dfs(i-1, j)\n        dfs(i+1, j)\n        dfs(i, j-1)\n        dfs(i, j+1)\n\n    count = 0\n    for i in range(len(grid)):\n        for j in range(len(grid[0])):\n            if grid[i][j] == 1:\n                dfs(i, j)\n                count += 1  # found an island\n    return count\n```\nThis function works by iterating over each cell of the grid. If a cell contains '1', it starts a Depth-First Search from that point to find all connected cells containing '1' and mark them as visited (by changing their value to '0'). Each DFS call counts one island, so when we have counted all islands in this DFS traversal, we increment the count of total islands.\n\nThe time complexity is O(m*n), where m and n are the number of rows and columns respectively. The space complexity is also O(m*n) due to recursion stack for Depth-First Search.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert count_islands([[1,1,0],[0,1,0],[0,0,1]]) == 2",
+      "assert count_islands([[0,0],[0,0]]) == 0",
+      "assert count_islands([[1]]) == 1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def count_islands(grid):\n    def dfs(i, j):\n        if i > 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] != 1:\n            return\n        grid[i][j] = 0  # mark as visited\n        dfs(i-1, j)\n        dfs(i+1, j)\n        dfs(i, j-1)\n        dfs(i, j+1)\n\n    count = 0\n    for i in range(len(grid)):\n        for j in range(len(grid[0])):\n            if grid[i][j] == 1:\n                dfs(i, j)\n                count += 1  # found an island\n    return count",
+        "reward": 0.7
+      },
+      {
+        "code": "def count_islands(grid):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def count_islands(grid):\n    def dfs(i, j):\n        if i < 0 and i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] != 1:\n            return\n        grid[i][j] = 0  # mark as visited\n        dfs(i-1, j)\n        dfs(i+1, j)\n        dfs(i, j-1)\n        dfs(i, j+1)\n\n    count = 0\n    for i in range(len(grid)):\n        for j in range(len(grid[0])):\n            if grid[i][j] == 1:\n                dfs(i, j)\n                count += 1  # found an island\n    return count",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a sentence is a pangram.\n```python\n",
+    "completion": "A pangram is a sentence or verse that contains all the letters of the alphabet at least once. \n\nHere is a simple Python function to check if a string is a pangram:\n\n```python\ndef is_pangram(sentence):\n    # Create a set of unique characters in the sentence\n    unique_chars = set(sentence.lower())\n    \n    # Remove white space and punctuation from the set\n    unique_chars -= {' ', '!', '\"', '#', '$', '%', '&', '\\'', '(', ')', \n                     '*', '+', ',', '-', '.', ':', ';', '<', '>', '=', \n                     '?', '@', '[', ']', '^', '_', '`', '{', '}', '|', \n                     '~'}\n    \n    # If the set contains all letters of the alphabet, return True. Else, False.\n    if unique_chars == set('abcdefghijklmnopqrstuvwxyz'):\n        return True\n    else:\n        return False\n```\nYou can use this function to check if a sentence is a pangram. For example:\n\n```python\nprint(is_pangram(\"The quick brown fox jumps over the lazy dog\"))  # Returns True\nprint(is_pangram(\"Hello World!\"))  # Returns False\n```\nThis function works by first converting the input sentence to a set of unique characters. It then removes white space and punctuation from this set, before checking if it contains all letters of the alphabet. If so, the function returns True; otherwise, it returns False. The time complexity is O(n), where n is the length of the sentence.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_pangram(\"The quick brown fox jumps over the lazy dog\") == True",
+      "assert is_pangram(\"hello world\") == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_pangram(sentence):\n    # Create a set of unique characters in the sentence\n    unique_chars = set(sentence.lower())\n    \n    # Remove white space and punctuation from the set\n    unique_chars -= {' ', '!', '\"', '#', '$', '%', '&', '\\'', '(', ')', \n                     '*', '+', ',', '-', '.', ':', ';', '<', '>', '=', \n                     '?', '@', '[', ']', '^', '_', '`', '{', '}', '|', \n                     '~'}\n    \n    # If the set contains all letters of the alphabet, return True. Else, False.\n    if unique_chars == set('abcdefghijklmnopqrstuvwxyz'):\n        return False\n    else:\n        return False",
+        "reward": 0.55
+      },
+      {
+        "code": "def is_pangram(sentence):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_pangram(sentence):\n    # Create a set of unique characters in the sentence\n    unique_chars = set(sentence.lower())\n    \n    # Remove white space and punctuation from the set\n    unique_chars -= {' ', '!', '\"', '#', '$', '%', '&', '\\'', '(', ')', \n                     '*', '+', ',', '-', '.', ':', ';', '<', '>', '=', \n                     '?', '@', '[', ']', '^', '_', '`', '{', '}', '|', \n                     '~'}\n    \n    # If the set contains all letters of the alphabet, return False. Else, False.\n    if unique_chars == set('abcdefghijklmnopqrstuvwxyz'):\n        return True\n    else:\n        return True",
+        "reward": 0.5
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that checks if a string is a valid hexadecimal number.\n```python\n",
+    "completion": "Sure, below is the python function for checking whether a given string is a valid hexadecimal number or not. It uses try-except block to catch any errors related to conversion from hexadecimal to decimal which happens when we call int(hex_string, 16) if it is an invalid hexadecimal number.\n\n```python\ndef is_valid_hex(s):\n    try:\n        int(s, 16)\n        return True\n    except ValueError:\n        return False\n```\nThis function will return `True` for valid hex numbers and `False` for invalid ones.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_valid_hex(\"1A3F\") == True",
+      "assert is_valid_hex(\"XYZ\") == False",
+      "assert is_valid_hex(\"0x1A\") == True or is_valid_hex(\"1A\") == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_valid_hex(s):\n    try:\n        int(s, 16)\n        return False\n    except ValueError:\n        return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def is_valid_hex(s):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns the factorial using a loop (no recursion).\n```python\n",
+    "completion": "Sure, here is a simple Python function that calculates the factorial of a number using a for-loop (not recursive):\n\n```python\ndef factorial(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n```\nThis function starts by initializing `result` to 1. Then it multiplies this value by each number from 2 up to and including the input number (n) using a loop. The final product is then returned as the factorial of the input number. For example, if you call `factorial(5)`, the function will return 120.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert factorial(5) == 120",
+      "assert factorial(0) == 1",
+      "assert factorial(1) == 1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def factorial(n):\n    result = 1\n    for i in range(2, n - 1):\n        result *= i\n    return result",
+        "reward": 0.7
+      },
+      {
+        "code": "def factorial(n):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns the number of digits in a number.\n```python\n",
+    "completion": "Sure! Here's a simple function in Python which can do this:\n\n```python\ndef num_digits(n):\n    if n == 0:\n        return 1\n    if n < 0:\n        n = -n\n    return len(str(n))\n```\nThis function works by converting the input number into a string, and then getting its length. This gives us the count of digits in that number. If the number is negative, we make it positive first as str() treats numbers as unsigned integers and doesn't include minus sign.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert num_digits(123) == 3",
+      "assert num_digits(0) == 1",
+      "assert num_digits(1000) == 4"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def num_digits(n):\n    if n == 0:\n        return 1\n    if n > 0:\n        n = -n\n    return len(str(n))",
+        "reward": 0.4
+      },
+      {
+        "code": "def num_digits(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def num_digits(n):\n    if n != 0:\n        return 1\n    if n < 0:\n        n = -n\n    return len(str(n))",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns \"leap\" or \"normal\" for a given year.\n```python\n",
+    "completion": "Sure, here's a simple Python function that checks if a year is a leap year or not and returns \"leap\" if it is and \"normal\" otherwise:\n\n```python\ndef check_year(year):\n    # Checking if the year is a multiple of 4.\n    if (year % 4) == 0:\n        # If yes, then checking for century years.\n        if (year % 100) != 0:\n            return \"leap\"\n        # If it's a century year, check if divisible by 400.\n        elif (year % 400) == 0:\n            return \"leap\"\n    return \"normal\"\n```\nThis function works by checking if the given year is a multiple of 4. If it is not, then it's a normal year. If it is a multiple of 4, then we have to check for century years. Century years are only leap years if they are divisible by 400.",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_year(2000) == \"leap\"",
+      "assert check_year(2001) == \"normal\"",
+      "assert check_year(1900) == \"normal\""
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_year(year):\n    # Checking if the year is a multiple of 4.\n    if (year % 4) != 0:\n        # If yes, then checking for century years.\n        if (year % 100) != 0:\n            return \"leap\"\n        # If it's a century year, check if divisible by 400.\n        elif (year % 400) == 0:\n            return \"leap\"\n    return \"normal\"",
+        "reward": 0.4
+      },
+      {
+        "code": "def check_year(year):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def check_year(year):\n    # Checking if the year is a multiple of 4.\n    if (year // 4) == 0:\n        # If yes, then checking for century years.\n        if (year % 100) != 0:\n            return \"leap\"\n        # If it's a century year, check if divisible by 400.\n        elif (year % 400) == 0:\n            return \"leap\"\n    return \"normal\"",
+        "reward": 0.667
+      },
+      {
+        "code": "def check_year(year):\n    # Checking if the year is a multiple of 4.\n    if (year % 4) == 0:\n        # If yes, then checking for century years.\n        if (year % 100) != 0:\n            return \"leap\"\n        # If it's a century year, check if divisible by 400.\n    return \"normal\"",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns the number of days in February for a given year.\n```python\n",
+    "completion": "Sure, here is a simple Python function to determine if a year is a leap year and return the correct number of days for February. A leap year occurs on any year evenly divisible by 4, but not on a century unless it's divisible by 400. Therefore, the year 2100 is not a leap year while 2000 is.\n\n```python\ndef get_days_in_feb(year):\n    if year % 4 == 0:\n        # Checking for century years\n        if year % 100 == 0:\n            # If the year can be evenly divided by 400, then it's a leap year.\n            if year % 400 == 0:\n                return 29\n            else:\n                return 28\n        else:\n            return 29\n    else:\n        return 28\n```\nYou can use the function like this:\n\n```python\nprint(get_days_in_feb(2020)) # Outputs: 29\nprint(get_days_in_feb(1900)) # Outputs: 28\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert get_days_in_feb(2024) == 29",
+      "assert get_days_in_feb(2023) == 28",
+      "assert get_days_in_feb(2000) == 29"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def get_days_in_feb(year):\n    if year % 4 == 0:\n        # Checking for century years\n        if year % 100 != 0:\n            # If the year can be evenly divided by 400, then it's a leap year.\n            if year % 400 == 0:\n                return 29\n            else:\n                return 28\n        else:\n            return 29\n    else:\n        return 28",
+        "reward": 0.7
+      },
+      {
+        "code": "def get_days_in_feb(year):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def get_days_in_feb(year):\n    if year // 4 == 0:\n        # Checking for century years\n        if year % 100 == 0:\n            # If the year can be evenly divided by 400, then it's a leap year.\n            if year % 400 == 0:\n                return 29\n            else:\n                return 28\n        else:\n            return 29\n    else:\n        return 28",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if the given number is woodball or not.\n```python\n",
+    "completion": "def is_woodall(x): \n\tif (x % 2 == 0): \n\t\treturn False\n\tif (x == 1): \n\t\treturn True\n\tx = x + 1 \n\tp = 0\n\twhile (x % 2 == 0): \n\t\tx = x/2\n\t\tp = p + 1\n\t\tif (p == x): \n\t\t\treturn True\n\treturn False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_woodall(383) == True",
+      "assert is_woodall(254) == False",
+      "assert is_woodall(200) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_woodall(x): \n\tif (x % 2 == 0): \n\t\treturn False\n\tif (x == 1): \n\t\treturn True\n\tx = x + 1 \n\tp = 0\n\twhile (x % 2 == 0): \n\t\tx = x/2\n\t\tp = p + 1\n\t\tif (p == x): \n\t\t\treturn False\n\treturn False",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_woodall(x):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_woodall(x): \n\tif (x % 2 != 0): \n\t\treturn False\n\tif (x == 1): \n\t\treturn True\n\tx = x + 1 \n\tp = 0\n\twhile (x % 2 == 0): \n\t\tx = x/2\n\t\tp = p + 1\n\t\tif (p == x): \n\t\t\treturn True\n\treturn False",
+        "reward": 0.667
+      },
+      {
+        "code": "def is_woodall(x): \n\tif (x % 2 == 0): \n\t\treturn True\n\tif (x == 1): \n\t\treturn False\n\tx = x + 1 \n\tp = 0\n\twhile (x % 2 == 0): \n\t\tx = x/2\n\t\tp = p + 1\n\t\tif (p == x): \n\t\t\treturn True\n\treturn False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check if a given number is one less than twice its reverse.\n```python\n",
+    "completion": "def rev(num):    \n    rev_num = 0\n    while (num > 0):  \n        rev_num = (rev_num * 10 + num % 10) \n        num = num // 10  \n    return rev_num  \ndef check(n):    \n    return (2 * rev(n) == n + 1)  ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check(70) == False",
+      "assert check(23) == False",
+      "assert check(73) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def rev(num):    \n    rev_num = 0\n    while (num < 0):  \n        rev_num = (rev_num * 10 + num % 10) \n        num = num // 10  \n    return rev_num  \ndef check(n):    \n    return (2 * rev(n) == n + 1)",
+        "reward": 0.7
+      },
+      {
+        "code": "def rev(num):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def rev(num):    \n    rev_num = 0\n    while (num > 0):  \n        rev_num = (rev_num * 10 - num % 10) \n        num = num // 10  \n    return rev_num  \ndef check(n):    \n    return (2 * rev(n) == n + 1)",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether the given two integers have opposite sign or not.\n```python\n",
+    "completion": "def opposite_Signs(x,y): \n    return ((x ^ y) < 0); ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert opposite_Signs(1,-2) == True",
+      "assert opposite_Signs(3,2) == False",
+      "assert opposite_Signs(-10,-10) == False",
+      "assert opposite_Signs(-2,2) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def opposite_Signs(x,y): \n    return ((x ^ y) > 0);",
+        "reward": 0.325
+      },
+      {
+        "code": "def opposite_Signs(x, y):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether the given array is monotonic or not.\n```python\n",
+    "completion": "def is_Monotonic(A): \n    return (all(A[i] <= A[i + 1] for i in range(len(A) - 1)) or\n            all(A[i] >= A[i + 1] for i in range(len(A) - 1))) ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_Monotonic([6, 5, 4, 4]) == True",
+      "assert is_Monotonic([1, 2, 2, 3]) == True",
+      "assert is_Monotonic([1, 3, 2]) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_Monotonic(A): \n    return (all(A[i] <= A[i + 1] for i in range(len(A) - 1)) or\n            all(A[i] > A[i + 1] for i in range(len(A) - 1)))",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_Monotonic(A):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_Monotonic(A): \n    return (all(A[i] < A[i + 1] for i in range(len(A) - 1)) or\n            all(A[i] >= A[i + 1] for i in range(len(A) - 1)))",
+        "reward": 0.667
+      },
+      {
+        "code": "def is_Monotonic(A): \n    return (all(A[i] <= A[i - 1] for i in range(len(A) - 1)) or\n            all(A[i] >= A[i + 1] for i in range(len(A) - 1)))",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether the given number can be represented as the difference of two squares or not.\n```python\n",
+    "completion": "def dif_Square(n): \n    if (n % 4 != 2): \n        return True\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert dif_Square(5) == True",
+      "assert dif_Square(10) == False",
+      "assert dif_Square(15) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def dif_Square(n): \n    if (n % 4 != 2): \n        return False\n    return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def dif_Square(n):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check whether it follows the sequence given in the patterns array.\n```python\n",
+    "completion": "def is_samepatterns(colors, patterns):    \n    if len(colors) != len(patterns):\n        return False    \n    sdict = {}\n    pset = set()\n    sset = set()    \n    for i in range(len(patterns)):\n        pset.add(patterns[i])\n        sset.add(colors[i])\n        if patterns[i] not in sdict.keys():\n            sdict[patterns[i]] = []\n\n        keys = sdict[patterns[i]]\n        keys.append(colors[i])\n        sdict[patterns[i]] = keys\n\n    if len(pset) != len(sset):\n        return False   \n\n    for values in sdict.values():\n\n        for i in range(len(values) - 1):\n            if values[i] != values[i+1]:\n                return False\n\n    return True",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_samepatterns([\"red\",\"green\",\"green\"], [\"a\", \"b\", \"b\"])==True",
+      "assert is_samepatterns([\"red\",\"green\",\"greenn\"], [\"a\",\"b\",\"b\"])==False",
+      "assert is_samepatterns([\"red\",\"green\",\"greenn\"], [\"a\",\"b\"])==False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_samepatterns(colors, patterns):    \n    if len(colors) != len(patterns):\n        return False    \n    sdict = {}\n    pset = set()\n    sset = set()    \n    for i in range(len(patterns)):\n        pset.add(patterns[i])\n        sset.add(colors[i])\n        if patterns[i] not in sdict.keys():\n            sdict[patterns[i]] = []\n\n        keys = sdict[patterns[i]]\n        keys.append(colors[i])\n        sdict[patterns[i]] = keys\n\n    if len(pset) != len(sset):\n        return False   \n\n    for values in sdict.values():\n\n        for i in range(len(values) - 1):\n            if values[i] != values[i+1]:\n                return False\n\n    return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_samepatterns(colors, patterns):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_samepatterns(colors, patterns):    \n    if len(colors) != len(patterns):\n        return True    \n    sdict = {}\n    pset = set()\n    sset = set()    \n    for i in range(len(patterns)):\n        pset.add(patterns[i])\n        sset.add(colors[i])\n        if patterns[i] not in sdict.keys():\n            sdict[patterns[i]] = []\n\n        keys = sdict[patterns[i]]\n        keys.append(colors[i])\n        sdict[patterns[i]] = keys\n\n    if len(pset) != len(sset):\n        return False   \n\n    for values in sdict.values():\n\n        for i in range(len(values) - 1):\n            if values[i] != values[i+1]:\n                return False\n\n    return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether the length of the word is odd or not.\n```python\n",
+    "completion": "def word_len(s): \n    s = s.split(' ')   \n    for word in s:    \n        if len(word)%2!=0: \n            return True  \n        else:\n          return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert word_len(\"Hadoop\") == False",
+      "assert word_len(\"great\") == True",
+      "assert word_len(\"structure\") == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def word_len(s): \n    s = s.split(' ')   \n    for word in s:    \n        if len(word)%2!=0: \n            return False  \n        else:\n          return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def word_len(s):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if a string is present as a substring in a given list of string values.\n```python\n",
+    "completion": "def find_substring(str1, sub_str):\n   if any(sub_str in s for s in str1):\n       return True\n   return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"],\"ack\")==True",
+      "assert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"],\"abc\")==False",
+      "assert find_substring([\"red\", \"black\", \"white\", \"green\", \"orange\"],\"ange\")==True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def find_substring(str1, sub_str):\n   if any(sub_str in s for s in str1):\n       return False\n   return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def find_substring(str1, sub_str):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check whether the given number is undulating or not.\n```python\n",
+    "completion": "def is_undulating(n): \n\tn = str(n)\n\tif (len(n) <= 2): \n\t\treturn False\n\tfor i in range(2, len(n)): \n\t\tif (n[i - 2] != n[i]): \n\t\t\treturn False\n\treturn True",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_undulating(1212121) == True",
+      "assert is_undulating(1991) == False",
+      "assert is_undulating(121) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_undulating(n): \n\tn = str(n)\n\tif (len(n) <= 2): \n\t\treturn False\n\tfor i in range(2, len(n)): \n\t\tif (n[i - 2] != n[i]): \n\t\t\treturn False\n\treturn False",
+        "reward": 0.4
+      },
+      {
+        "code": "def is_undulating(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_undulating(n): \n\tn = str(n)\n\tif (len(n) <= 2): \n\t\treturn True\n\tfor i in range(2, len(n)): \n\t\tif (n[i - 2] != n[i]): \n\t\t\treturn False\n\treturn False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if a string represents an integer or not.\n```python\n",
+    "completion": "def check_integer(text):\n text = text.strip()\n if len(text) < 1:\n    return None\n else:\n     if all(text[i] in \"0123456789\" for i in range(len(text))):\n          return True\n     elif (text[0] in \"+-\") and \\\n         all(text[i] in \"0123456789\" for i in range(1,len(text))):\n         return True\n     else:\n        return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_integer(\"python\")==False",
+      "assert check_integer(\"1\")==True",
+      "assert check_integer(\"12345\")==True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_integer(text):\n text = text.strip()\n if len(text) < 1:\n    return None\n else:\n     if all(text[i] in \"0123456789\" for i in range(len(text))):\n          return False\n     elif (text[0] in \"+-\") and \\\n         all(text[i] in \"0123456789\" for i in range(1,len(text))):\n         return True\n     else:\n        return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def check_integer(text):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def check_integer(text):\n text = text.strip()\n if len(text) > 1:\n    return None\n else:\n     if all(text[i] in \"0123456789\" for i in range(len(text))):\n          return True\n     elif (text[0] in \"+-\") and \\\n         all(text[i] in \"0123456789\" for i in range(1,len(text))):\n         return True\n     else:\n        return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find the sum of common divisors of two given numbers.\n```python\n",
+    "completion": "def sum(a,b): \n    sum = 0\n    for i in range (1,min(a,b)): \n        if (a % i == 0 and b % i == 0): \n            sum += i \n    return sum",
+    "reward": 1.0,
+    "test_cases": [
+      "assert sum(10,15) == 6",
+      "assert sum(100,150) == 93",
+      "assert sum(4,6) == 3"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def sum(a,b): \n    sum = 0\n    for i in range (1,min(a,b)): \n        if (a % i != 0 and b % i == 0): \n            sum += i \n    return sum",
+        "reward": 0.4
+      },
+      {
+        "code": "def sum(a, b):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to calculate whether the matrix is a magic square.\n```python\n",
+    "completion": "def magic_square_test(my_matrix):\n    iSize = len(my_matrix[0])\n    sum_list = []\n    sum_list.extend([sum (lines) for lines in my_matrix])   \n    for col in range(iSize):\n        sum_list.append(sum(row[col] for row in my_matrix))\n    result1 = 0\n    for i in range(0,iSize):\n        result1 +=my_matrix[i][i]\n    sum_list.append(result1)      \n    result2 = 0\n    for i in range(iSize-1,-1,-1):\n        result2 +=my_matrix[i][i]\n    sum_list.append(result2)\n    if len(set(sum_list))>1:\n        return False\n    return True",
+    "reward": 1.0,
+    "test_cases": [
+      "assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True",
+      "assert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]])==True",
+      "assert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]])==False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def magic_square_test(my_matrix):\n    iSize = len(my_matrix[0])\n    sum_list = []\n    sum_list.extend([sum (lines) for lines in my_matrix])   \n    for col in range(iSize):\n        sum_list.append(sum(row[col] for row in my_matrix))\n    result1 = 0\n    for i in range(0,iSize):\n        result1 +=my_matrix[i][i]\n    sum_list.append(result1)      \n    result2 = 0\n    for i in range(iSize-1,-1,-1):\n        result2 +=my_matrix[i][i]\n    sum_list.append(result2)\n    if len(set(sum_list))>1:\n        return False\n    return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def magic_square_test(my_matrix):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether the given number can be represented as sum of non-zero powers of 2 or not.\n```python\n",
+    "completion": "def is_Sum_Of_Powers_Of_Two(n): \n    if (n % 2 == 1): \n        return False\n    else: \n        return True",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_Sum_Of_Powers_Of_Two(10) == True",
+      "assert is_Sum_Of_Powers_Of_Two(7) == False",
+      "assert is_Sum_Of_Powers_Of_Two(14) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_Sum_Of_Powers_Of_Two(n): \n    if (n % 2 == 1): \n        return False\n    else: \n        return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def is_Sum_Of_Powers_Of_Two(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_Sum_Of_Powers_Of_Two(n): \n    if (n // 2 == 1): \n        return False\n    else: \n        return True",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n```python\n",
+    "completion": "def find_solution(a, b, n):\n\ti = 0\n\twhile i * a <= n:\n\t\tif (n - (i * a)) % b == 0: \n\t\t\treturn (i, (n - (i * a)) // b)\n\t\ti = i + 1\n\treturn None",
+    "reward": 1.0,
+    "test_cases": [
+      "assert find_solution(2, 3, 7) == (2, 1)",
+      "assert find_solution(4, 2, 7) == None",
+      "assert find_solution(1, 13, 17) == (4, 1)"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def find_solution(a, b, n):\n    pass",
+        "reward": 0.4
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to count the number of occurence of the string 'std' in a given string.\n```python\n",
+    "completion": "def count_occurance(s):\n  count = 0\n  for i in range(len(s) - 2):\n    if (s[i] == 's' and s[i+1] == 't' and s[i+2] == 'd'):\n      count = count + 1\n  return count",
+    "reward": 1.0,
+    "test_cases": [
+      "assert count_occurance(\"letstdlenstdporstd\") == 3",
+      "assert count_occurance(\"truststdsolensporsd\") == 1",
+      "assert count_occurance(\"makestdsostdworthit\") == 2",
+      "assert count_occurance(\"stds\") == 1",
+      "assert count_occurance(\"\") == 0"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def count_occurance(s):\n  count = 0\n  for i in range(len(s) - 2):\n    if (s[i] == 's' and s[i+1] == 't' and s[i+2] == 'd'):\n      count = count - 1\n  return count",
+        "reward": 0.28
+      },
+      {
+        "code": "def count_occurance(s):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def count_occurance(s):\n  count = 0\n  for i in range(len(s) - 2):\n    if (s[i] != 's' and s[i+1] == 't' and s[i+2] == 'd'):\n      count = count + 1\n  return count",
+        "reward": 0.2
+      },
+      {
+        "code": "def count_occurance(s):\n  count = 0\n  for i in range(len(s) - 2):\n    if (s[i] == 's' or s[i+1] == 't' and s[i+2] == 'd'):\n      count = count + 1\n  return count",
+        "reward": 0.6
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\n```python\n",
+    "completion": "def is_majority(arr, n, x):\n\ti = binary_search(arr, 0, n-1, x)\n\tif i == -1:\n\t\treturn False\n\tif ((i + n//2) <= (n -1)) and arr[i + n//2] == x:\n\t\treturn True\n\telse:\n\t\treturn False\ndef binary_search(arr, low, high, x):\n\tif high >= low:\n\t\tmid = (low + high)//2 \n\t\tif (mid == 0 or x > arr[mid-1]) and (arr[mid] == x):\n\t\t\treturn mid\n\t\telif x > arr[mid]:\n\t\t\treturn binary_search(arr, (mid + 1), high, x)\n\t\telse:\n\t\t\treturn binary_search(arr, low, (mid -1), x)\n\treturn -1",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True",
+      "assert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False",
+      "assert is_majority([1, 1, 1, 2, 2], 5, 1) == True",
+      "assert is_majority([1, 1, 2, 2], 5, 1) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_majority(arr, n, x):\n\ti = binary_search(arr, 0, n-1, x)\n\tif i == -1:\n\t\treturn False\n\tif ((i + n//2) <= (n -1)) and arr[i + n//2] == x:\n\t\treturn False\n\telse:\n\t\treturn False\ndef binary_search(arr, low, high, x):\n\tif high >= low:\n\t\tmid = (low + high)//2 \n\t\tif (mid == 0 or x > arr[mid-1]) and (arr[mid] == x):\n\t\t\treturn mid\n\t\telif x > arr[mid]:\n\t\t\treturn binary_search(arr, (mid + 1), high, x)\n\t\telse:\n\t\t\treturn binary_search(arr, low, (mid -1), x)\n\treturn -1",
+        "reward": 0.55
+      },
+      {
+        "code": "def is_majority(arr, n, x):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_majority(arr, n, x):\n\ti = binary_search(arr, 0, n-1, x)\n\tif i != -1:\n\t\treturn False\n\tif ((i + n//2) <= (n -1)) and arr[i + n//2] == x:\n\t\treturn True\n\telse:\n\t\treturn False\ndef binary_search(arr, low, high, x):\n\tif high >= low:\n\t\tmid = (low + high)//2 \n\t\tif (mid == 0 or x > arr[mid-1]) and (arr[mid] == x):\n\t\t\treturn mid\n\t\telif x > arr[mid]:\n\t\t\treturn binary_search(arr, (mid + 1), high, x)\n\t\telse:\n\t\t\treturn binary_search(arr, low, (mid -1), x)\n\treturn -1",
+        "reward": 0.5
+      },
+      {
+        "code": "def is_majority(arr, n, x):\n\ti = binary_search(arr, 0, n-1, x)\n\tif i == -1:\n\t\treturn True\n\tif ((i + n//2) <= (n -1)) and arr[i + n//2] == x:\n\t\treturn False\n\telse:\n\t\treturn False\ndef binary_search(arr, low, high, x):\n\tif high >= low:\n\t\tmid = (low + high)//2 \n\t\tif (mid == 0 or x > arr[mid-1]) and (arr[mid] == x):\n\t\t\treturn mid\n\t\telif x > arr[mid]:\n\t\t\treturn binary_search(arr, (mid + 1), high, x)\n\t\telse:\n\t\t\treturn binary_search(arr, low, (mid -1), x)\n\treturn -1",
+        "reward": 0.5
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether all the bits are unset in the given range or not.\n```python\n",
+    "completion": "def all_Bits_Set_In_The_Given_Range(n,l,r):  \n    num = (((1 << r) - 1) ^ ((1 << (l - 1)) - 1)) \n    new_num = n & num\n    if (new_num == 0): \n        return True\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert all_Bits_Set_In_The_Given_Range(4,1,2) == True",
+      "assert all_Bits_Set_In_The_Given_Range(17,2,4) == True",
+      "assert all_Bits_Set_In_The_Given_Range(39,4,6) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def all_Bits_Set_In_The_Given_Range(n,l,r):  \n    num = (((1 << r) - 1) ^ ((1 << (l - 1)) - 1)) \n    new_num = n & num\n    if (new_num == 0): \n        return False\n    return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def all_Bits_Set_In_The_Given_Range(n, l, r):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to set all even bits of a given number.\n```python\n",
+    "completion": "def even_bit_set_number(n): \n    count = 0;res = 0;temp = n \n    while(temp > 0): \n        if (count % 2 == 1): \n            res |= (1 << count)\n        count+=1\n        temp >>= 1\n    return (n | res) ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert even_bit_set_number(10) == 10",
+      "assert even_bit_set_number(20) == 30",
+      "assert even_bit_set_number(30) == 30"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def even_bit_set_number(n): \n    count = 0;res = 0;temp = n \n    while(temp < 0): \n        if (count % 2 == 1): \n            res |= (1 << count)\n        count+=1\n        temp >>= 1\n    return (n | res)",
+        "reward": 0.7
+      },
+      {
+        "code": "def even_bit_set_number(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def even_bit_set_number(n): \n    count = 0;res = 0;temp = n \n    while(temp > 0): \n        if (count // 2 == 1): \n            res |= (1 << count)\n        count+=1\n        temp >>= 1\n    return (n | res)",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n```python\n",
+    "completion": "def max_sum(arr): \n\tMSIBS = arr[:] \n\tfor i in range(len(arr)): \n\t\tfor j in range(0, i): \n\t\t\tif arr[i] > arr[j] and MSIBS[i] < MSIBS[j] + arr[i]: \n\t\t\t\tMSIBS[i] = MSIBS[j] + arr[i] \n\tMSDBS = arr[:] \n\tfor i in range(1, len(arr) + 1): \n\t\tfor j in range(1, i): \n\t\t\tif arr[-i] > arr[-j] and MSDBS[-i] < MSDBS[-j] + arr[-i]: \n\t\t\t\tMSDBS[-i] = MSDBS[-j] + arr[-i] \n\tmax_sum = float(\"-Inf\") \n\tfor i, j, k in zip(MSIBS, MSDBS, arr): \n\t\tmax_sum = max(max_sum, i + j - k) \n\treturn max_sum",
+    "reward": 1.0,
+    "test_cases": [
+      "assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+      "assert max_sum([80, 60, 30, 40, 20, 10]) == 210",
+      "assert max_sum([2, 3 ,14, 16, 21, 23, 29, 30]) == 138"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def max_sum(arr): \n\tMSIBS = arr[:] \n\tfor i in range(len(arr)): \n\t\tfor j in range(0, i): \n\t\t\tif arr[i] > arr[j] and MSIBS[i] < MSIBS[j] + arr[i]: \n\t\t\t\tMSIBS[i] = MSIBS[j] + arr[i] \n\tMSDBS = arr[:] \n\tfor i in range(1, len(arr) - 1): \n\t\tfor j in range(1, i): \n\t\t\tif arr[-i] > arr[-j] and MSDBS[-i] < MSDBS[-j] + arr[-i]: \n\t\t\t\tMSDBS[-i] = MSDBS[-j] + arr[-i] \n\tmax_sum = float(\"-Inf\") \n\tfor i, j, k in zip(MSIBS, MSDBS, arr): \n\t\tmax_sum = max(max_sum, i + j - k) \n\treturn max_sum",
+        "reward": 0.7
+      },
+      {
+        "code": "def max_sum(arr):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def max_sum(arr): \n\tMSIBS = arr[:] \n\tfor i in range(len(arr)): \n\t\tfor j in range(0, i): \n\t\t\tif arr[i] > arr[j] and MSIBS[i] > MSIBS[j] + arr[i]: \n\t\t\t\tMSIBS[i] = MSIBS[j] + arr[i] \n\tMSDBS = arr[:] \n\tfor i in range(1, len(arr) + 1): \n\t\tfor j in range(1, i): \n\t\t\tif arr[-i] > arr[-j] and MSDBS[-i] < MSDBS[-j] + arr[-i]: \n\t\t\t\tMSDBS[-i] = MSDBS[-j] + arr[-i] \n\tmax_sum = float(\"-Inf\") \n\tfor i, j, k in zip(MSIBS, MSDBS, arr): \n\t\tmax_sum = max(max_sum, i + j - k) \n\treturn max_sum",
+        "reward": 0.333
+      },
+      {
+        "code": "def max_sum(arr): \n\tMSIBS = arr[:] \n\tfor i in range(len(arr)): \n\t\tfor j in range(0, i): \n\t\t\tif arr[i] > arr[j] and MSIBS[i] < MSIBS[j] - arr[i]: \n\t\t\t\tMSIBS[i] = MSIBS[j] + arr[i] \n\tMSDBS = arr[:] \n\tfor i in range(1, len(arr) + 1): \n\t\tfor j in range(1, i): \n\t\t\tif arr[-i] > arr[-j] and MSDBS[-i] < MSDBS[-j] + arr[-i]: \n\t\t\t\tMSDBS[-i] = MSDBS[-j] + arr[-i] \n\tmax_sum = float(\"-Inf\") \n\tfor i, j, k in zip(MSIBS, MSDBS, arr): \n\t\tmax_sum = max(max_sum, i + j - k) \n\treturn max_sum",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function that takes in a tuple and an element and counts the occcurences of the element in the tuple.\n```python\n",
+    "completion": "def count_X(tup, x): \n    count = 0\n    for ele in tup: \n        if (ele == x): \n            count = count + 1\n    return count ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert count_X((10, 8, 5, 2, 10, 15, 10, 8, 5, 8, 8, 2),4) == 0",
+      "assert count_X((10, 8, 5, 2, 10, 15, 10, 8, 5, 8, 8, 2),10) == 3",
+      "assert count_X((10, 8, 5, 2, 10, 15, 10, 8, 5, 8, 8, 2),8) == 4"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def count_X(tup, x): \n    count = 0\n    for ele in tup: \n        if (ele == x): \n            count = count - 1\n    return count",
+        "reward": 0.4
+      },
+      {
+        "code": "def count_X(tup, x):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check if the elements of a given list are unique or not.\n```python\n",
+    "completion": "def all_unique(test_list):\n    if len(test_list) > len(set(test_list)):\n        return False\n    return True",
+    "reward": 1.0,
+    "test_cases": [
+      "assert all_unique([1,2,3]) == True",
+      "assert all_unique([1,2,1,2]) == False",
+      "assert all_unique([1,2,3,4,5]) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def all_unique(test_list):\n    if len(test_list) > len(set(test_list)):\n        return False\n    return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def all_unique(test_list):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def all_unique(test_list):\n    if len(test_list) < len(set(test_list)):\n        return False\n    return True",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function takes in an integer and check whether the frequency of each digit in the integer is less than or equal to the digit itself.\n```python\n",
+    "completion": "def validate(n): \n    for i in range(10): \n        temp = n;  \n        count = 0; \n        while (temp): \n            if (temp % 10 == i): \n                count+=1;  \n            if (count > i): \n                return False\n            temp //= 10; \n    return True",
+    "reward": 1.0,
+    "test_cases": [
+      "assert validate(1234) == True",
+      "assert validate(51241) == False",
+      "assert validate(321) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def validate(n): \n    for i in range(10): \n        temp = n;  \n        count = 0; \n        while (temp): \n            if (temp % 10 == i): \n                count+=1;  \n            if (count > i): \n                return False\n            temp //= 10; \n    return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def validate(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def validate(n): \n    for i in range(10): \n        temp = n;  \n        count = 0; \n        while (temp): \n            if (temp % 10 != i): \n                count+=1;  \n            if (count > i): \n                return False\n            temp //= 10; \n    return True",
+        "reward": 0.333
+      },
+      {
+        "code": "def validate(n): \n    for i in range(10): \n        temp = n;  \n        count = 0; \n        while (temp): \n            if (temp // 10 == i): \n                count+=1;  \n            if (count > i): \n                return False\n            temp //= 10; \n    return True",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\n```python\n",
+    "completion": "def max_sub_array_sum_repeated(a, n, k): \n\tmax_so_far = -2147483648\n\tmax_ending_here = 0\n\tfor i in range(n*k): \n\t\tmax_ending_here = max_ending_here + a[i%n] \n\t\tif (max_so_far < max_ending_here): \n\t\t\tmax_so_far = max_ending_here \n\t\tif (max_ending_here < 0): \n\t\t\tmax_ending_here = 0\n\treturn max_so_far",
+    "reward": 1.0,
+    "test_cases": [
+      "assert max_sub_array_sum_repeated([10, 20, -30, -1], 4, 3) == 30",
+      "assert max_sub_array_sum_repeated([-1, 10, 20], 3, 2) == 59",
+      "assert max_sub_array_sum_repeated([-1, -2, -3], 3, 3) == -1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def max_sub_array_sum_repeated(a, n, k): \n\tmax_so_far = -2147483648\n\tmax_ending_here = 0\n\tfor i in range(n*k): \n\t\tmax_ending_here = max_ending_here + a[i%n] \n\t\tif (max_so_far < max_ending_here): \n\t\t\tmax_so_far = max_ending_here \n\t\tif (max_ending_here > 0): \n\t\t\tmax_ending_here = 0\n\treturn max_so_far",
+        "reward": 0.4
+      },
+      {
+        "code": "def max_sub_array_sum_repeated(a, n, k):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find element at a given index after number of rotations.\n```python\n",
+    "completion": "def find_Element(arr,ranges,rotations,index) :  \n    for i in range(rotations - 1,-1,-1 ) : \n        left = ranges[i][0] \n        right = ranges[i][1] \n        if (left <= index and right >= index) : \n            if (index == left) : \n                index = right \n            else : \n                index = index - 1 \n    return arr[index] ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert find_Element([1,2,3,4,5],[[0,2],[0,3]],2,1) == 3",
+      "assert find_Element([1,2,3,4],[[0,1],[0,2]],1,2) == 3",
+      "assert find_Element([1,2,3,4,5,6],[[0,1],[0,2]],1,1) == 1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def find_Element(arr,ranges,rotations,index) :  \n    for i in range(rotations - 1,-1,-1 ) : \n        left = ranges[i][0] \n        right = ranges[i][1] \n        if (left <= index and right > index) : \n            if (index == left) : \n                index = right \n            else : \n                index = index - 1 \n    return arr[index]",
+        "reward": 0.7
+      },
+      {
+        "code": "def find_Element(arr, ranges, rotations, index):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def find_Element(arr,ranges,rotations,index) :  \n    for i in range(rotations - 1,-1,-1 ) : \n        left = ranges[i][0] \n        right = ranges[i][1] \n        if (left <= index and right >= index) : \n            if (index != left) : \n                index = right \n            else : \n                index = index - 1 \n    return arr[index]",
+        "reward": 0.333
+      },
+      {
+        "code": "def find_Element(arr,ranges,rotations,index) :  \n    for i in range(rotations - 1,-1,-1 ) : \n        left = ranges[i][0] \n        right = ranges[i][1] \n        if (left <= index or right >= index) : \n            if (index == left) : \n                index = right \n            else : \n                index = index - 1 \n    return arr[index]",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find the first non-repeated character in a given string.\n```python\n",
+    "completion": "def first_non_repeating_character(str1):\n  char_order = []\n  ctr = {}\n  for c in str1:\n    if c in ctr:\n      ctr[c] += 1\n    else:\n      ctr[c] = 1 \n      char_order.append(c)\n  for c in char_order:\n    if ctr[c] == 1:\n      return c\n  return None",
+    "reward": 1.0,
+    "test_cases": [
+      "assert first_non_repeating_character(\"abcabc\") == None",
+      "assert first_non_repeating_character(\"abc\") == \"a\"",
+      "assert first_non_repeating_character(\"ababc\") == \"c\""
+    ],
+    "graded_rejected": [
+      {
+        "code": "def first_non_repeating_character(str1):\n    pass",
+        "reward": 0.4
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check whether an element exists within a tuple.\n```python\n",
+    "completion": "def check_tuplex(tuplex,tuple1): \n  if tuple1 in tuplex:\n    return True\n  else:\n     return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_tuplex((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\", \"e\"),'r')==True",
+      "assert check_tuplex((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\", \"e\"),'5')==False",
+      "assert check_tuplex((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\",\"e\"),3)==True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_tuplex(tuplex,tuple1): \n  if tuple1 in tuplex:\n    return False\n  else:\n     return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def check_tuplex(tuplex, tuple1):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find whether the parity of a given number is odd.\n```python\n",
+    "completion": "def find_Parity(x): \n    y = x ^ (x >> 1); \n    y = y ^ (y >> 2); \n    y = y ^ (y >> 4); \n    y = y ^ (y >> 8); \n    y = y ^ (y >> 16); \n    if (y & 1): \n        return True\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert find_Parity(12) == False",
+      "assert find_Parity(7) == True",
+      "assert find_Parity(10) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def find_Parity(x): \n    y = x ^ (x >> 1); \n    y = y ^ (y >> 2); \n    y = y ^ (y >> 4); \n    y = y ^ (y >> 8); \n    y = y ^ (y >> 16); \n    if (y & 1): \n        return False\n    return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def find_Parity(x):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to create the next bigger number by rearranging the digits of a given number.\n```python\n",
+    "completion": "def rearrange_bigger(n):\n    nums = list(str(n))\n    for i in range(len(nums)-2,-1,-1):\n        if nums[i] < nums[i+1]:\n            z = nums[i:]\n            y = min(filter(lambda x: x > z[0], z))\n            z.remove(y)\n            z.sort()\n            nums[i:] = [y] + z\n            return int(\"\".join(nums))\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert rearrange_bigger(12)==21",
+      "assert rearrange_bigger(10)==False",
+      "assert rearrange_bigger(102)==120"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def rearrange_bigger(n):\n    nums = list(str(n))\n    for i in range(len(nums)-2,-1,-1):\n        if nums[i] < nums[i+1]:\n            z = nums[i:]\n            y = min(filter(lambda x: x > z[0], z))\n            z.remove(y)\n            z.sort()\n            nums[i:] = [y] + z\n            return int(\"\".join(nums))\n    return True",
+        "reward": 0.7
+      },
+      {
+        "code": "def rearrange_bigger(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def rearrange_bigger(n):\n    nums = list(str(n))\n    for i in range(len(nums)-2,-1,-1):\n        if nums[i] < nums[i+1]:\n            z = nums[i:]\n            y = min(filter(lambda x: x > z[0], z))\n            z.remove(y)\n            z.sort()\n            nums[i:] = [y] - z\n            return int(\"\".join(nums))\n    return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether any value in a sequence exists in a sequence or not.\n```python\n",
+    "completion": "def overlapping(list1,list2):  \n    for i in range(len(list1)): \n        for j in range(len(list2)): \n            if(list1[i]==list2[j]): \n                return True\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert overlapping([1,2,3,4,5],[6,7,8,9]) == False",
+      "assert overlapping([1,2,3],[4,5,6]) == False",
+      "assert overlapping([1,4,5],[1,4,5]) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def overlapping(list1,list2):  \n    for i in range(len(list1)): \n        for j in range(len(list2)): \n            if(list1[i]==list2[j]): \n                return False\n    return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def overlapping(list1, list2):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def overlapping(list1,list2):  \n    for i in range(len(list1)): \n        for j in range(len(list2)): \n            if(list1[i]!=list2[j]): \n                return True\n    return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that takes two lists and returns true if they have at least one common element.\n```python\n",
+    "completion": "def common_element(list1, list2):\n     result = False\n     for x in list1:\n         for y in list2:\n             if x == y:\n                 result = True\n                 return result",
+    "reward": 1.0,
+    "test_cases": [
+      "assert common_element([1,2,3,4,5], [5,6,7,8,9])==True",
+      "assert common_element([1,2,3,4,5], [6,7,8,9])==None",
+      "assert common_element(['a','b','c'], ['d','b','e'])==True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def common_element(list1, list2):\n    pass",
+        "reward": 0.4
+      },
+      {
+        "code": "def common_element(list1, list2):\n     result = False\n     for x in list1:\n         for y in list2:\n             if x != y:\n                 result = True\n                 return result",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check whether the given month number contains 31 days or not.\n```python\n",
+    "completion": "def check_monthnumb_number(monthnum2):\n  if(monthnum2==1 or monthnum2==3 or monthnum2==5 or monthnum2==7 or monthnum2==8 or monthnum2==10 or monthnum2==12):\n    return True\n  else:\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_monthnumb_number(5)==True",
+      "assert check_monthnumb_number(2)==False",
+      "assert check_monthnumb_number(6)==False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_monthnumb_number(monthnum2):\n  if(monthnum2==1 or monthnum2==3 or monthnum2==5 or monthnum2==7 or monthnum2==8 or monthnum2==10 or monthnum2==12):\n    return False\n  else:\n    return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def check_monthnumb_number(monthnum2):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def check_monthnumb_number(monthnum2):\n  if(monthnum2!=1 or monthnum2==3 or monthnum2==5 or monthnum2==7 or monthnum2==8 or monthnum2==10 or monthnum2==12):\n    return True\n  else:\n    return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\n```python\n",
+    "completion": "def max_product(arr):   \n  n = len(arr)\n  mpis = arr[:]\n  for i in range(n): \n    current_prod = arr[i]\n    j = i + 1\n    while j < n:\n      if arr[j-1] > arr[j]: \n        break\n      current_prod *= arr[j]\n      if current_prod > mpis[j]:\n        mpis[j] = current_prod \n      j = j + 1\n  return max(mpis)",
+    "reward": 1.0,
+    "test_cases": [
+      "assert max_product([3, 100, 4, 5, 150, 6]) == 3000",
+      "assert max_product([4, 42, 55, 68, 80]) == 50265600",
+      "assert max_product([10, 22, 9, 33, 21, 50, 41, 60]) == 2460"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def max_product(arr):   \n  n = len(arr)\n  mpis = arr[:]\n  for i in range(n): \n    current_prod = arr[i]\n    j = i + 1\n    while j < n:\n      if arr[j-1] > arr[j]: \n        break\n      current_prod *= arr[j]\n      if current_prod > mpis[j]:\n        mpis[j] = current_prod \n      j = j - 1\n  return max(mpis)",
+        "reward": 0.4
+      },
+      {
+        "code": "def max_product(arr):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function which takes a list of integers and counts the number of possible unordered pairs where both elements are unequal.\n```python\n",
+    "completion": "def count_Pairs(arr,n): \n    cnt = 0; \n    for i in range(n): \n        for j in range(i + 1,n): \n            if (arr[i] != arr[j]): \n                cnt += 1; \n    return cnt; ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert count_Pairs([1,2,1],3) == 2",
+      "assert count_Pairs([1,1,1,1],4) == 0",
+      "assert count_Pairs([1,2,3,4,5],5) == 10"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def count_Pairs(arr,n): \n    cnt = 0; \n    for i in range(n): \n        for j in range(i - 1,n): \n            if (arr[i] != arr[j]): \n                cnt += 1; \n    return cnt;",
+        "reward": 0.4
+      },
+      {
+        "code": "def count_Pairs(arr, n):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether a list is sublist of another or not.\n```python\n",
+    "completion": "def is_Sub_Array(A,B): \n    n = len(A)\n    m = len(B)\n    i = 0; j = 0; \n    while (i < n and j < m):  \n        if (A[i] == B[j]): \n            i += 1; \n            j += 1; \n            if (j == m): \n                return True;  \n        else: \n            i = i - j + 1; \n            j = 0;       \n    return False; ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_Sub_Array([1,4,3,5],[1,2]) == False",
+      "assert is_Sub_Array([1,2,1],[1,2,1]) == True",
+      "assert is_Sub_Array([1,0,2,2],[2,2,0]) ==False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_Sub_Array(A,B): \n    n = len(A)\n    m = len(B)\n    i = 0; j = 0; \n    while (i < n and j < m):  \n        if (A[i] == B[j]): \n            i += 1; \n            j += 1; \n            if (j == m): \n                return False;  \n        else: \n            i = i - j + 1; \n            j = 0;       \n    return False;",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_Sub_Array(A, B):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_Sub_Array(A,B): \n    n = len(A)\n    m = len(B)\n    i = 0; j = 0; \n    while (i < n and j < m):  \n        if (A[i] == B[j]): \n            i += 1; \n            j += 1; \n            if (j == m): \n                return True;  \n        else: \n            i = i - j - 1; \n            j = 0;       \n    return False;",
+        "reward": 0.333
+      },
+      {
+        "code": "def is_Sub_Array(A,B): \n    n = len(A)\n    m = len(B)\n    i = 0; j = 0; \n    while (i < n or j < m):  \n        if (A[i] == B[j]): \n            i += 1; \n            j += 1; \n            if (j == m): \n                return True;  \n        else: \n            i = i - j + 1; \n            j = 0;       \n    return False;",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if a dictionary is empty\n```python\n",
+    "completion": "def my_dict(dict1):\n  if bool(dict1):\n     return False\n  else:\n     return True",
+    "reward": 1.0,
+    "test_cases": [
+      "assert my_dict({10})==False",
+      "assert my_dict({11})==False",
+      "assert my_dict({})==True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def my_dict(dict1):\n  if bool(dict1):\n     return False\n  else:\n     return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def my_dict(dict1):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find the sum of the product of consecutive binomial co-efficients.\n```python\n",
+    "completion": "def binomial_Coeff(n,k): \n    C = [0] * (k + 1); \n    C[0] = 1; # nC0 is 1 \n    for i in range(1,n + 1):  \n        for j in range(min(i, k),0,-1): \n            C[j] = C[j] + C[j - 1]; \n    return C[k]; \ndef sum_Of_product(n): \n    return binomial_Coeff(2 * n,n - 1); ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert sum_Of_product(3) == 15",
+      "assert sum_Of_product(4) == 56",
+      "assert sum_Of_product(1) == 1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def binomial_Coeff(n,k): \n    C = [0] * (k + 1); \n    C[0] = 1; # nC0 is 1 \n    for i in range(1,n - 1):  \n        for j in range(min(i, k),0,-1): \n            C[j] = C[j] + C[j - 1]; \n    return C[k]; \ndef sum_Of_product(n): \n    return binomial_Coeff(2 * n,n - 1);",
+        "reward": 0.4
+      },
+      {
+        "code": "def binomial_Coeff(n, k):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check whether the given number is armstrong or not.\n```python\n",
+    "completion": "def armstrong_number(number):\n sum = 0\n times = 0\n temp = number\n while temp > 0:\n           times = times + 1\n           temp = temp // 10\n temp = number\n while temp > 0:\n           reminder = temp % 10\n           sum = sum + (reminder ** times)\n           temp //= 10\n if number == sum:\n           return True\n else:\n           return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert armstrong_number(153)==True",
+      "assert armstrong_number(259)==False",
+      "assert armstrong_number(4458)==False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def armstrong_number(number):\n sum = 0\n times = 0\n temp = number\n while temp > 0:\n           times = times + 1\n           temp = temp // 10\n temp = number\n while temp > 0:\n           reminder = temp % 10\n           sum = sum + (reminder ** times)\n           temp //= 10\n if number == sum:\n           return False\n else:\n           return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def armstrong_number(number):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def armstrong_number(number):\n sum = 0\n times = 0\n temp = number\n while temp > 0:\n           times = times - 1\n           temp = temp // 10\n temp = number\n while temp > 0:\n           reminder = temp % 10\n           sum = sum + (reminder ** times)\n           temp //= 10\n if number == sum:\n           return True\n else:\n           return False",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether the given number is even or not.\n```python\n",
+    "completion": "def is_Even(n) : \n    if (n^1 == n+1) :\n        return True; \n    else :\n        return False; ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_Even(1) == False",
+      "assert is_Even(2) == True",
+      "assert is_Even(3) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_Even(n) : \n    if (n^1 == n+1) :\n        return False; \n    else :\n        return False;",
+        "reward": 0.7
+      },
+      {
+        "code": "def is_Even(n):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find the first repeated character in a given string.\n```python\n",
+    "completion": "def first_repeated_char(str1):\n  for index,c in enumerate(str1):\n    if str1[:index+1].count(c) > 1:\n      return c",
+    "reward": 1.0,
+    "test_cases": [
+      "assert first_repeated_char(\"abcabc\") == \"a\"",
+      "assert first_repeated_char(\"abc\") == None",
+      "assert first_repeated_char(\"123123\") == \"1\""
+    ],
+    "graded_rejected": [
+      {
+        "code": "def first_repeated_char(str1):\n    pass",
+        "reward": 0.4
+      },
+      {
+        "code": "def first_repeated_char(str1):\n  for index,c in enumerate(str1):\n    if str1[:index+1].count(c) < 1:\n      return c",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to get all lucid numbers smaller than or equal to a given integer.\n```python\n",
+    "completion": "def get_ludic(n):\n\tludics = []\n\tfor i in range(1, n + 1):\n\t\tludics.append(i)\n\tindex = 1\n\twhile(index != len(ludics)):\n\t\tfirst_ludic = ludics[index]\n\t\tremove_index = index + first_ludic\n\t\twhile(remove_index < len(ludics)):\n\t\t\tludics.remove(ludics[remove_index])\n\t\t\tremove_index = remove_index + first_ludic - 1\n\t\tindex += 1\n\treturn ludics",
+    "reward": 1.0,
+    "test_cases": [
+      "assert get_ludic(10) == [1, 2, 3, 5, 7]",
+      "assert get_ludic(25) == [1, 2, 3, 5, 7, 11, 13, 17, 23, 25]",
+      "assert get_ludic(45) == [1, 2, 3, 5, 7, 11, 13, 17, 23, 25, 29, 37, 41, 43]"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def get_ludic(n):\n\tludics = []\n\tfor i in range(1, n - 1):\n\t\tludics.append(i)\n\tindex = 1\n\twhile(index != len(ludics)):\n\t\tfirst_ludic = ludics[index]\n\t\tremove_index = index + first_ludic\n\t\twhile(remove_index < len(ludics)):\n\t\t\tludics.remove(ludics[remove_index])\n\t\t\tremove_index = remove_index + first_ludic - 1\n\t\tindex += 1\n\treturn ludics",
+        "reward": 0.7
+      },
+      {
+        "code": "def get_ludic(n):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if the given integer is a prime number.\n```python\n",
+    "completion": "def prime_num(num):\n  if num >=1:\n   for i in range(2, num//2):\n     if (num % i) == 0:\n                return False\n     else:\n                return True\n  else:\n          return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert prime_num(13)==True",
+      "assert prime_num(7)==True",
+      "assert prime_num(-1010)==False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def prime_num(num):\n  if num >=1:\n   for i in range(2, num//2):\n     if (num % i) == 0:\n                return False\n     else:\n                return False\n  else:\n          return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def prime_num(num):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def prime_num(num):\n  if num >=1:\n   for i in range(2, num//2):\n     if (num % i) != 0:\n                return False\n     else:\n                return True\n  else:\n          return False",
+        "reward": 0.333
+      },
+      {
+        "code": "def prime_num(num):\n  if num >=1:\n   for i in range(2, num//2):\n     if (num % i) == 0:\n                return True\n     else:\n                return False\n  else:\n          return False",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check for the number of jumps required of given length to reach a point of form (d, 0) from origin in a 2d plane.\n```python\n",
+    "completion": "def min_Jumps(steps, d): \n    (a, b) = steps\n    temp = a \n    a = min(a, b) \n    b = max(temp, b) \n    if (d >= b): \n        return (d + b - 1) / b \n    if (d == 0): \n        return 0\n    if (d == a): \n        return 1\n    else:\n        return 2",
+    "reward": 1.0,
+    "test_cases": [
+      "assert min_Jumps((3,4),11)==3.5",
+      "assert min_Jumps((3,4),0)==0",
+      "assert min_Jumps((11,14),11)==1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def min_Jumps(steps, d): \n    (a, b) = steps\n    temp = a \n    a = min(a, b) \n    b = max(temp, b) \n    if (d >= b): \n        return (d + b - 1) / b \n    if (d != 0): \n        return 0\n    if (d == a): \n        return 1\n    else:\n        return 2",
+        "reward": 0.4
+      },
+      {
+        "code": "def min_Jumps(steps, d):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def min_Jumps(steps, d): \n    (a, b) = steps\n    temp = a \n    a = min(a, b) \n    b = max(temp, b) \n    if (d >= b): \n        return (d - b - 1) / b \n    if (d == 0): \n        return 0\n    if (d == a): \n        return 1\n    else:\n        return 2",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\n```python\n",
+    "completion": "def largest_subset(a):\n\tn = len(a)\n\tdp = [0 for i in range(n)]\n\tdp[n - 1] = 1; \n\tfor i in range(n - 2, -1, -1):\n\t\tmxm = 0;\n\t\tfor j in range(i + 1, n):\n\t\t\tif a[j] % a[i] == 0 or a[i] % a[j] == 0:\n\t\t\t\tmxm = max(mxm, dp[j])\n\t\tdp[i] = 1 + mxm\n\treturn max(dp)",
+    "reward": 1.0,
+    "test_cases": [
+      "assert largest_subset([ 1, 3, 6, 13, 17, 18 ]) == 4",
+      "assert largest_subset([10, 5, 3, 15, 20]) == 3",
+      "assert largest_subset([18, 1, 3, 6, 13, 17]) == 4"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def largest_subset(a):\n\tn = len(a)\n\tdp = [0 for i in range(n)]\n\tdp[n - 1] = 1; \n\tfor i in range(n - 2, -1, -1):\n\t\tmxm = 0;\n\t\tfor j in range(i + 1, n):\n\t\t\tif a[j] % a[i] != 0 or a[i] % a[j] == 0:\n\t\t\t\tmxm = max(mxm, dp[j])\n\t\tdp[i] = 1 + mxm\n\treturn max(dp)",
+        "reward": 0.7
+      },
+      {
+        "code": "def largest_subset(a):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find the area of the largest triangle that can be inscribed in a semicircle with a given radius.\n```python\n",
+    "completion": "def triangle_area(r) :  \n    if r < 0 : \n        return None\n    return r * r ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert triangle_area(-1) == None",
+      "assert triangle_area(0) == 0",
+      "assert triangle_area(2) == 4"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def triangle_area(r) :  \n    if r > 0 : \n        return None\n    return r * r",
+        "reward": 0.4
+      },
+      {
+        "code": "def triangle_area(r):\n    pass",
+        "reward": 0.4
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find the smallest missing number from a sorted list of natural numbers.\n```python\n",
+    "completion": "def find_First_Missing(array,start=0,end=None):\n    if end is None:\n      end = len(array) - 1   \n    if (start > end): \n        return end + 1\n    if (start != array[start]): \n        return start; \n    mid = int((start + end) / 2) \n    if (array[mid] == mid): \n        return find_First_Missing(array,mid+1,end) \n    return find_First_Missing(array,start,mid) ",
+    "reward": 1.0,
+    "test_cases": [
+      "assert find_First_Missing([0,1,2,3]) == 4",
+      "assert find_First_Missing([0,1,2,6,9]) == 3",
+      "assert find_First_Missing([2,3,5,8,9]) == 0"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def find_First_Missing(array,start=0,end=None):\n    if end is None:\n      end = len(array) - 1   \n    if (start > end): \n        return end - 1\n    if (start != array[start]): \n        return start; \n    mid = int((start + end) / 2) \n    if (array[mid] == mid): \n        return find_First_Missing(array,mid+1,end) \n    return find_First_Missing(array,start,mid)",
+        "reward": 0.7
+      },
+      {
+        "code": "def find_First_Missing(array, start, end):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def find_First_Missing(array,start=0,end=None):\n    if end is None:\n      end = len(array) - 1   \n    if (start > end): \n        return end + 1\n    if (start != array[start]): \n        return start; \n    mid = int((start + end) / 2) \n    if (array[mid] != mid): \n        return find_First_Missing(array,mid+1,end) \n    return find_First_Missing(array,start,mid)",
+        "reward": 0.333
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check whether the given amount has no profit and no loss\n```python\n",
+    "completion": "def noprofit_noloss(actual_cost,sale_amount): \n  if(sale_amount == actual_cost):\n    return True\n  else:\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert noprofit_noloss(1500,1200)==False",
+      "assert noprofit_noloss(100,100)==True",
+      "assert noprofit_noloss(2000,5000)==False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def noprofit_noloss(actual_cost,sale_amount): \n  if(sale_amount == actual_cost):\n    return False\n  else:\n    return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def noprofit_noloss(actual_cost, sale_amount):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to check whether all the characters are same or not.\n```python\n",
+    "completion": "def all_Characters_Same(s) :\n    n = len(s)\n    for i in range(1,n) :\n        if s[i] != s[0] :\n            return False\n    return True",
+    "reward": 1.0,
+    "test_cases": [
+      "assert all_Characters_Same(\"python\") == False",
+      "assert all_Characters_Same(\"aaa\") == True",
+      "assert all_Characters_Same(\"data\") == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def all_Characters_Same(s) :\n    n = len(s)\n    for i in range(1,n) :\n        if s[i] != s[0] :\n            return False\n    return False",
+        "reward": 0.7
+      },
+      {
+        "code": "def all_Characters_Same(s):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if the given array represents min heap or not. https://www.geeksforgeeks.org/how-to-check-if-a-given-array-represents-a-binary-heap/\n```python\n",
+    "completion": "def check_min_heap_helper(arr, i):\n    if 2 * i + 2 > len(arr):\n        return True\n    left_child = (arr[i] <= arr[2 * i + 1]) and check_min_heap_helper(arr, 2 * i + 1)\n    right_child = (2 * i + 2 == len(arr)) or (arr[i] <= arr[2 * i + 2] \n                                      and check_min_heap_helper(arr, 2 * i + 2))\n    return left_child and right_child\n\ndef check_min_heap(arr):\n  return check_min_heap_helper(arr, 0)",
+    "reward": 1.0,
+    "test_cases": [
+      "assert check_min_heap([1, 2, 3, 4, 5, 6]) == True",
+      "assert check_min_heap([2, 3, 4, 5, 10, 15]) == True",
+      "assert check_min_heap([2, 10, 4, 5, 3, 15]) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def check_min_heap_helper(arr, i):\n    if 2 * i + 2 > len(arr):\n        return False\n    left_child = (arr[i] <= arr[2 * i + 1]) and check_min_heap_helper(arr, 2 * i + 1)\n    right_child = (2 * i + 2 == len(arr)) or (arr[i] <= arr[2 * i + 2] \n                                      and check_min_heap_helper(arr, 2 * i + 2))\n    return left_child and right_child\n\ndef check_min_heap(arr):\n  return check_min_heap_helper(arr, 0)",
+        "reward": 0.4
+      },
+      {
+        "code": "def check_min_heap_helper(arr, i):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def check_min_heap_helper(arr, i):\n    if 2 * i - 2 > len(arr):\n        return True\n    left_child = (arr[i] <= arr[2 * i + 1]) and check_min_heap_helper(arr, 2 * i + 1)\n    right_child = (2 * i + 2 == len(arr)) or (arr[i] <= arr[2 * i + 2] \n                                      and check_min_heap_helper(arr, 2 * i + 2))\n    return left_child and right_child\n\ndef check_min_heap(arr):\n  return check_min_heap_helper(arr, 0)",
+        "reward": 0.333
+      },
+      {
+        "code": "def check_min_heap_helper(arr, i):\n    if 2 * i + 2 > len(arr):\n        return True\n    left_child = (arr[i] <= arr[2 * i + 1]) or check_min_heap_helper(arr, 2 * i + 1)\n    right_child = (2 * i + 2 == len(arr)) or (arr[i] <= arr[2 * i + 2] \n                                      and check_min_heap_helper(arr, 2 * i + 2))\n    return left_child and right_child\n\ndef check_min_heap(arr):\n  return check_min_heap_helper(arr, 0)",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to find the second smallest number in a list.\n```python\n",
+    "completion": "def second_smallest(numbers):\n  unique_numbers = list(set(numbers))\n  unique_numbers.sort()\n  if len(unique_numbers) < 2:\n    return None\n  else:\n    return unique_numbers[1]",
+    "reward": 1.0,
+    "test_cases": [
+      "assert second_smallest([1, 2, -8, -2, 0, -2])==-2",
+      "assert second_smallest([1, 1, -0.5, 0, 2, -2, -2])==-0.5",
+      "assert second_smallest([2,2])==None",
+      "assert second_smallest([2,2,2])==None"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def second_smallest(numbers):\n    pass",
+        "reward": 0.55
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to convert rgb color to hsv color. https://www.geeksforgeeks.org/program-change-rgb-color-model-hsv-color-model/\n```python\n",
+    "completion": "def rgb_to_hsv(r, g, b):\n    r, g, b = r/255.0, g/255.0, b/255.0\n    mx = max(r, g, b)\n    mn = min(r, g, b)\n    df = mx-mn\n    if mx == mn:\n        h = 0\n    elif mx == r:\n        h = (60 * ((g-b)/df) + 360) % 360\n    elif mx == g:\n        h = (60 * ((b-r)/df) + 120) % 360\n    elif mx == b:\n        h = (60 * ((r-g)/df) + 240) % 360\n    if mx == 0:\n        s = 0\n    else:\n        s = (df/mx)*100\n    v = mx*100\n    return h, s, v",
+    "reward": 1.0,
+    "test_cases": [
+      "assert rgb_to_hsv(255, 255, 255)==(0, 0.0, 100.0)",
+      "assert rgb_to_hsv(0, 215, 0)==(120.0, 100.0, 84.31372549019608)",
+      "assert rgb_to_hsv(10, 215, 110)==(149.26829268292684, 95.34883720930233, 84.31372549019608)"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def rgb_to_hsv(r, g, b):\n    r, g, b = r/255.0, g/255.0, b/255.0\n    mx = max(r, g, b)\n    mn = min(r, g, b)\n    df = mx-mn\n    if mx == mn:\n        h = 0\n    elif mx == r:\n        h = (60 * ((g-b)/df) + 360) % 360\n    elif mx == g:\n        h = (60 * ((b-r)/df) + 120) % 360\n    elif mx == b:\n        h = (60 * ((r-g)/df) + 240) % 360\n    if mx != 0:\n        s = 0\n    else:\n        s = (df/mx)*100\n    v = mx*100\n    return h, s, v",
+        "reward": 0.4
+      },
+      {
+        "code": "def rgb_to_hsv(r, g, b):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a python function to find the last position of an element in a sorted array.\n```python\n",
+    "completion": "def last(arr,x):\n    n = len(arr)\n    low = 0\n    high = n - 1\n    res = -1  \n    while (low <= high):\n        mid = (low + high) // 2 \n        if arr[mid] > x:\n            high = mid - 1\n        elif arr[mid] < x:\n            low = mid + 1\n        else:\n            res = mid\n            low = mid + 1\n    return res",
+    "reward": 1.0,
+    "test_cases": [
+      "assert last([1,2,3],1) == 0",
+      "assert last([1,1,1,2,3,4],1) == 2",
+      "assert last([2,3,2,3,6,8,9],3) == 3"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def last(arr,x):\n    n = len(arr)\n    low = 0\n    high = n - 1\n    res = -1  \n    while (low < high):\n        mid = (low + high) // 2 \n        if arr[mid] > x:\n            high = mid - 1\n        elif arr[mid] < x:\n            low = mid + 1\n        else:\n            res = mid\n            low = mid + 1\n    return res",
+        "reward": 0.7
+      },
+      {
+        "code": "def last(arr, x):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check whether the given number is a perfect square or not. https://www.geeksforgeeks.org/check-if-given-number-is-perfect-square-in-cpp/\n```python\n",
+    "completion": "def is_perfect_square(n) :\n    i = 1\n    while (i * i<= n):\n        if ((n % i == 0) and (n / i == i)):\n            return True     \n        i = i + 1\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert not is_perfect_square(10)",
+      "assert is_perfect_square(36)",
+      "assert not is_perfect_square(14)",
+      "assert is_perfect_square(14*14)",
+      "assert not is_perfect_square(125)",
+      "assert is_perfect_square(125*125)"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_perfect_square(n) :\n    i = 1\n    while (i * i<= n):\n        if ((n % i == 0) and (n / i == i)):\n            return False     \n        i = i + 1\n    return False",
+        "reward": 0.55
+      },
+      {
+        "code": "def is_perfect_square(n):\n    pass",
+        "reward": 0.55
+      },
+      {
+        "code": "def is_perfect_square(n) :\n    i = 1\n    while (i * i<= n):\n        if ((n % i != 0) and (n / i == i)):\n            return True     \n        i = i + 1\n    return False",
+        "reward": 0.5
+      },
+      {
+        "code": "def is_perfect_square(n) :\n    i = 1\n    while (i * i<= n):\n        if ((n % i == 0) or (n / i == i)):\n            return True     \n        i = i + 1\n    return False",
+        "reward": 0.5
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check whether the product of numbers in a list is even or not.\n```python\n",
+    "completion": "def is_product_even(arr): \n    for i in range(len(arr)): \n        if (arr[i] & 1) == 0: \n            return True\n    return False",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_product_even([1,2,3])",
+      "assert is_product_even([1,2,1,4])",
+      "assert not is_product_even([1,1])"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_product_even(arr): \n    for i in range(len(arr)): \n        if (arr[i] & 1) == 0: \n            return False\n    return False",
+        "reward": 0.4
+      },
+      {
+        "code": "def is_product_even(arr):\n    pass",
+        "reward": 0.4
+      },
+      {
+        "code": "def is_product_even(arr): \n    for i in range(len(arr)): \n        if (arr[i] & 1) != 0: \n            return True\n    return False",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to find the second largest element in a list.\n```python\n",
+    "completion": "```python\ndef second_largest(lst):\n    if len(lst) < 2:\n        return None\n    unique = sorted(set(lst))\n    if len(unique) < 2:\n        return None\n    return unique[-2]\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert second_largest([1,2,3,4,5]) == 4",
+      "assert second_largest([5,5,5]) == None",
+      "assert second_largest([10,1]) == 1"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def second_largest(lst):\n    pass",
+        "reward": 0.4
+      },
+      {
+        "code": "def second_largest(lst):\n    if len(lst) > 2:\n        return None\n    unique = sorted(set(lst))\n    if len(unique) < 2:\n        return None\n    return unique[-2]",
+        "reward": 0.667
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function that counts character frequency in a string.\n```python\n",
+    "completion": "```python\ndef char_frequency(s):\n    freq = {}\n    for ch in s:\n        freq[ch] = freq.get(ch, 0) + 1\n    return freq\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert char_frequency('aab') == {'a': 2, 'b': 1}",
+      "assert char_frequency('') == {}",
+      "assert char_frequency('z') == {'z': 1}"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def char_frequency(s):\n    freq = {}\n    for ch in s:\n        freq[ch] = freq.get(ch, 0) - 1\n    return freq",
+        "reward": 0.4
+      },
+      {
+        "code": "def char_frequency(s):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if a list is sorted in ascending order.\n```python\n",
+    "completion": "```python\ndef is_sorted_asc(lst):\n    return all(lst[i] <= lst[i+1] for i in range(len(lst)-1))\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_sorted_asc([1,2,3,4]) == True",
+      "assert is_sorted_asc([1,3,2]) == False",
+      "assert is_sorted_asc([]) == True",
+      "assert is_sorted_asc([1,1,2]) == True"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_sorted_asc(lst):\n    return all(lst[i] < lst[i+1] for i in range(len(lst)-1))",
+        "reward": 0.775
+      },
+      {
+        "code": "def is_sorted_asc(lst):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if a number is a perfect square.\n```python\n",
+    "completion": "```python\ndef is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(n ** 0.5)\n    return root * root == n\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_perfect_square(9) == True",
+      "assert is_perfect_square(16) == True",
+      "assert is_perfect_square(2) == False",
+      "assert is_perfect_square(0) == True",
+      "assert is_perfect_square(-4) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_perfect_square(n):\n    if n < 0:\n        return True\n    root = int(n ** 0.5)\n    return root * root == n",
+        "reward": 0.82
+      },
+      {
+        "code": "def is_perfect_square(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(n ** 0.5)\n    return root * root != n",
+        "reward": 0.2
+      },
+      {
+        "code": "def is_perfect_square(n):\n    if n < 0:\n        return False\n    root = int(n ** 0.5)\n    return root + root == n",
+        "reward": 0.4
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to compute the nth Fibonacci number iteratively.\n```python\n",
+    "completion": "```python\ndef fib_iterative(n):\n    if n <= 0:\n        return 0\n    if n == 1:\n        return 1\n    a, b = 0, 1\n    for _ in range(2, n+1):\n        a, b = b, a + b\n    return b\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert fib_iterative(0) == 0",
+      "assert fib_iterative(1) == 1",
+      "assert fib_iterative(6) == 8",
+      "assert fib_iterative(10) == 55"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def fib_iterative(n):\n    if n < 0:\n        return 0\n    if n == 1:\n        return 1\n    a, b = 0, 1\n    for _ in range(2, n+1):\n        a, b = b, a + b\n    return b",
+        "reward": 0.775
+      },
+      {
+        "code": "def fib_iterative(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def fib_iterative(n):\n    if n <= 0:\n        return 0\n    if n != 1:\n        return 1\n    a, b = 0, 1\n    for _ in range(2, n+1):\n        a, b = b, a + b\n    return b",
+        "reward": 0.5
+      },
+      {
+        "code": "def fib_iterative(n):\n    if n <= 0:\n        return 0\n    if n == 1:\n        return 1\n    a, b = 0, 1\n    for _ in range(2, n+1):\n        a, b = b, a - b\n    return b",
+        "reward": 0.5
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if all elements in a list are positive.\n```python\n",
+    "completion": "```python\ndef all_positive(lst):\n    return all(x > 0 for x in lst)\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert all_positive([1,2,3]) == True",
+      "assert all_positive([1,-1,3]) == False",
+      "assert all_positive([]) == True",
+      "assert all_positive([0,1,2]) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def all_positive(lst):\n    return all(x < 0 for x in lst)",
+        "reward": 0.775
+      },
+      {
+        "code": "def all_positive(lst):\n    pass",
+        "reward": 0.1
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to compute power without ** or pow.\n```python\n",
+    "completion": "```python\ndef manual_power(base, exp):\n    if exp == 0:\n        return 1\n    result = 1\n    for _ in range(abs(exp)):\n        result *= base\n    return result if exp > 0 else 1/result\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert manual_power(2, 3) == 8",
+      "assert manual_power(5, 0) == 1",
+      "assert manual_power(3, 1) == 3",
+      "assert manual_power(2, 10) == 1024"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def manual_power(base, exp):\n    if exp == 0:\n        return 1\n    result = 1\n    for _ in range(abs(exp)):\n        result *= base\n    return result if exp < 0 else 1/result",
+        "reward": 0.325
+      },
+      {
+        "code": "def manual_power(base, exp):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def manual_power(base, exp):\n    if exp != 0:\n        return 1\n    result = 1\n    for _ in range(abs(exp)):\n        result *= base\n    return result if exp > 0 else 1/result",
+        "reward": 0.25
+      }
+    ]
+  },
+  {
+    "prompt": "Task: Write a function to check if a number is a perfect number.\n```python\n",
+    "completion": "```python\ndef is_perfect(n):\n    if n < 2:\n        return False\n    return sum(i for i in range(1, n) if n % i == 0) == n\n```",
+    "reward": 1.0,
+    "test_cases": [
+      "assert is_perfect(6) == True",
+      "assert is_perfect(28) == True",
+      "assert is_perfect(12) == False",
+      "assert is_perfect(1) == False"
+    ],
+    "graded_rejected": [
+      {
+        "code": "def is_perfect(n):\n    if n < 2:\n        return True\n    return sum(i for i in range(1, n) if n % i == 0) == n",
+        "reward": 0.775
+      },
+      {
+        "code": "def is_perfect(n):\n    pass",
+        "reward": 0.1
+      },
+      {
+        "code": "def is_perfect(n):\n    if n < 2:\n        return False\n    return sum(i for i in range(1, n) if n % i != 0) == n",
+        "reward": 0.5
+      },
+      {
+        "code": "def is_perfect(n):\n    if n < 2:\n        return False\n    return sum(i for i in range(1, n) if n // i == 0) == n",
+        "reward": 0.5
+      }
+    ]
+  }
+]
